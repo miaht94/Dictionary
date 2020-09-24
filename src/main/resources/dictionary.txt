@@ -1,0 +1,4 @@
+one	một
+two	hai
+three	ba
+foru	bốn

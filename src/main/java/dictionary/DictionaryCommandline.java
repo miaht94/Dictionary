@@ -8,11 +8,18 @@ public class DictionaryCommandline {
         System.out.println(String.format("%1$-10s| %2$-" + dict.getLengthMax() + "s | %3$s", "NO", "English", "Vietnamese"));
         IntStream.range(0, dict.getWords().size()).
                 forEach(i -> {
-                    System.out.println(String.format("%1$-10d| %2$-" + Math.max(dict.getLengthMax(), 8) + "s| %3$s", i, dict.getWords().get(i).getWord_target(), dict.getWords().get(i).getWord_explain()));
+                    System.out.println(dict.stringFormatPrinting(i));
                 });
     }
+
     public static void dictionaryBasic() {
         DictionaryManagement.insertFromCommandline();
         DictionaryCommandline.showAllWords();
+    }
+
+    public static void dictionaryAdvanced() {
+        DictionaryManagement.insertFromFile();
+        DictionaryCommandline.showAllWords();
+        DictionaryManagement.lookUp();
     }
 }
