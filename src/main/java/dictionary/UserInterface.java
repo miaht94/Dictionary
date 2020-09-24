@@ -8,30 +8,39 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+
 
 public class UserInterface extends Application {
 
-    Stage dictWindow;
+    private Stage primaryStage;
     Scene dictScene,tranScene;
 
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/certainUI.fxml"));
-        dictWindow = primaryStage;
-        dictWindow.setTitle("Dictionary from UET with love");
-        dictScene = new Scene(root, 1000, 720);
-        dictWindow.setScene(dictScene);
-        dictWindow.show();
+        this.primaryStage = primaryStage;
+        this.primaryStage.setTitle("Dictionary Project KoyoMia100 - GUI Prototype");
+        initDictLayout();
+    }
 
+    public void initDictLayout(){
+        try{
+            // Load root layout from fxml file.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(UserInterface.class.getResource("/certainUI.fxml"));
+            Parent root = loader.load();
+            dictScene = new Scene(root, 1000, 768);
+            primaryStage.setScene(dictScene);
+            primaryStage.show();
 
+            UserInterfaceController controller = loader.getController();
+            controller.setUserInterface(this);
 
-        //setOnAction(new EventHandler<ActionEvent event>{
-        //      @Override
-        //      public void handle(ActionEvent event){
-        //
-        //      }
-        // }
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+
     }
 
     public static void main(String[] args) {
