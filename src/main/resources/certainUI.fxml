@@ -4,6 +4,7 @@
 <?import com.jfoenix.controls.JFXListView?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
@@ -37,7 +38,7 @@
                   <Font name="SF Pro Rounded Regular" size="26.0" />
                </font>
             </TextField>
-            <JFXButton fx:id="searchButton" buttonType="RAISED" layoutX="913.0" layoutY="82.0" prefHeight="68.0" prefWidth="87.0" ripplerFill="WHITE" text="Search" textFill="#b21717">
+            <JFXButton fx:id="searchButton" buttonType="RAISED" layoutX="913.0" layoutY="82.0" onAction="#searchButtonPressed" prefHeight="68.0" prefWidth="87.0" ripplerFill="WHITE" text="Search" textFill="#b21717">
                <font>
                   <Font name="SF Pro Rounded Regular" size="19.0" />
                </font>
@@ -76,10 +77,10 @@
       </AnchorPane>
       <AnchorPane layoutY="155.0" prefHeight="614.0" prefWidth="1000.0" AnchorPane.topAnchor="155.0">
          <children>
-            <JFXListView fx:id="wordListUI" layoutX="14.0" layoutY="14.0" prefHeight="552.0" prefWidth="239.0" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="14.0" />
+            <JFXListView fx:id="wordListUI" fixedCellSize="40.0" layoutX="14.0" layoutY="14.0" prefHeight="552.0" prefWidth="239.0" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="14.0" />
             <TextArea editable="false" layoutX="268.0" layoutY="66.0" prefHeight="501.0" prefWidth="721.0" text="definition">
                <font>
-                  <Font size="29.0" />
+                  <Font size="38.0" />
                </font>
             </TextArea>
             <Label layoutX="268.0" layoutY="14.0" text="word name" textFill="WHITE">
@@ -92,6 +93,7 @@
                   <Font name="SF Pro Rounded Semibold" size="14.0" />
                </font>
             </Text>
+            <ListView fx:id="wordListNativeUI" layoutX="15.0" layoutY="14.0" prefHeight="552.0" prefWidth="239.0" />
          </children></AnchorPane>
    </children>
 </AnchorPane>
