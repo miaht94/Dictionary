@@ -18,3 +18,5 @@
 # Maven
 log/
 target/
+
+*.db
