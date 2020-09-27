@@ -1,6 +1,5 @@
 package Model;
 
-import com.sun.xml.internal.bind.v2.runtime.reflect.Lister;
 import javafx.collections.ObservableList;
 
 import java.sql.ResultSet;
