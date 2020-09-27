@@ -2,7 +2,6 @@ package DictionaryApp;
 
 import Model.Word;
 import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXListView;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
@@ -15,7 +14,6 @@ import javafx.collections.FXCollections;
 /**
  * Import Model only.
  */
-import DictionaryApp.UserInterface;
 import Model.Dictionary;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
@@ -73,6 +71,7 @@ public class UserInterfaceController {
 
     @FXML
     private void setWordListStyle(){
+        //wordListNativeUI.setStyle(getClass().getClassLoader().getResource("certainUIStyle.css").toString());
         wordListNativeUI.setStyle("-fx-font-size: 21px; -fx-font-family: 'SF Pro Rounded Regular';");
     }
 
@@ -105,7 +104,8 @@ public class UserInterfaceController {
     @FXML
     private void initializeWebView() {
         this.certainWordDefinitionWE = this.certainWordDefinition.getEngine();
-        this.certainWordDefinitionWE.setUserStyleSheetLocation(getClass().getClassLoader().getResource("DefaultStyle.css").toString());
+        this.certainWordDefinitionWE.setUserStyleSheetLocation(getClass().getClassLoader().getResource("dictionaryStyle.css").toString());
+
     }
 
     /**

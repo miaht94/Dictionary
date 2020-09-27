@@ -18,7 +18,7 @@ public class UserInterface extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         this.primaryStage = primaryStage;
-        this.primaryStage.setTitle("Dictionary Project KoyoMia100 - GUI Prototype");
+        this.primaryStage.setTitle("KoyoMia100 Dictionary Project - GUI Prototype");
         initDictLayout();
     }
 
@@ -29,6 +29,7 @@ public class UserInterface extends Application {
             loader.setLocation(UserInterface.class.getResource("/certainUI.fxml"));
             Parent root = loader.load();
             dictScene = new Scene(root, 1000, 768);
+            dictScene.getStylesheets().add(getClass().getClassLoader().getResource("certainUIStyle.css").toString());
             primaryStage.setScene(dictScene);
             primaryStage.show();
 
