@@ -32,6 +32,10 @@ public class Dictionary {
         return lengthMax;
     }
 
+    public String stringFormatPrinting(int index) {
+        return String.format("%1$-10d| %2$-" + Math.max(this.getLengthMax(), 8) + "s| %3$s", index, this.getWords().get(index).getWord_target(), this.getWords().get(index).getWord_explain());
+    }
+
     // Testing
     public static void main(String[] args) {
         Dictionary dict = Dictionary.getInstance();
