@@ -4,13 +4,14 @@
 
 A dictionary designed for Vietnamese.
 
-This repository houses the first project of KoyoMia100 (miaht94 & vakoyomi) originally made for Object-Oriented Programming course's group assignment of class INT2204 23, UET-VNU.
+This repository houses the first project of KoyoMia100 originally made for Object-Oriented Programming course's group assignment of class INT2204 23, UET-VNU.
 
 ### Releases & Install Guide
 This project is WIP. No releases have been made.
 
 ### Resources
 Using Lac Viet Dictionary database fetched from Apple Dictionary for demo purpose.
+
 Intended to use Google Translate API & self-made database instead.
 
 ### Configurations
@@ -24,9 +25,10 @@ External libraries used:
 
 ### System Requirements
 **OS:** Windows 7, macOS 10.11, Ubuntu 18.01 and higher with Java Runtime Environment installed.
+
 **RAM & CPU:** untested. still depends on luck.
 
 ### Credits
-- **Made by:** **KoyoMia100** featuring **Nguyễn Việt Anh** & **Trần Xuân Bách**.
+- **Made by:** **KoyoMia100** featuring **Nguyễn Việt Anh** (@vakoyomi) & **Trần Xuân Bách** (@miaht94)
 - **Class:** N3 - INT2204 23 - University of Engineering and Technology, VNU.
 - **Start date:** Sep 21, 2020
