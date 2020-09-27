@@ -26,86 +26,94 @@ import javafx.util.Callback;
  * The type User interface controller.
  */
 public class UserInterfaceController {
+
+    private UserInterface userInterface;
+
     @FXML
     private JFXButton enviButton;
     @FXML
     private JFXButton vienButton;
     @FXML
     private JFXButton tranButton;
-    @FXML
-    private JFXButton searchButton;
-    @FXML
-    private JFXListView<String> wordListUI;
-    @FXML
-    private ListView<Word> wordListNativeUI;
+
     @FXML
     private TextField searchBox;
     @FXML
-    private Label certainWordTitle;
+    private JFXButton searchButton;
 
-
-    private UserInterface userInterface;
-
+    @FXML
+    private ListView<Word> wordListNativeUI;
     private ObservableList<Word> certainResultOL = FXCollections.observableArrayList();
 
+    @FXML
+    private Label certainWordTitle;
     @FXML
     private WebView certainWordDefinition;
     private WebEngine certainWordDefinitionWE;
 
     private long previousPressedTime = System.currentTimeMillis();
 
-    /**
-     * The constructor.
-     * The constructor is called before the initialize() method.
-     */
+
     public UserInterfaceController(){
 
     }
 
-    String HTML_STRING = "Hello";
-
-
-    /**
-     *
-     * Define property ListView should show reference: https://stackoverflow.com/questions/24597911/how-to-define-which-property-listview-should-use-to-render
-     *
-     */
     @FXML
     private void initialize() {
-        // Sample Data
         Dictionary nativeDict = Dictionary.getInstance();
         nativeDict.searchWord("a", certainResultOL);
         showResult();
 
-        certainWordDefinition = new WebView();
-        certainWordDefinitionWE = certainWordDefinition.getEngine();
+        initializeWebView();
+        setWordListStyle();
 
-        // Set wordListNativeUI
+        searchBoxListener(nativeDict);
+        wordListListener();
+    }
+
+    @FXML
+    private void setWordListStyle(){
         wordListNativeUI.setStyle("-fx-font-size: 21px; -fx-font-family: 'SF Pro Rounded Regular';");
+    }
 
-        // searchBox listener init...
+    @FXML
+    private void searchBoxListener(Dictionary nativeDict){
         searchBox.textProperty().addListener((observable, oldValue, newValue) -> {
             long currentTime = System.currentTimeMillis();
-            //System.out.println("textfield changed from " + oldValue + " to " + newValue);
             if (currentTime-previousPressedTime >= 1000) {
+                System.out.println("textfield changed from " + oldValue + " to " + newValue);
                 nativeDict.searchWord(newValue, certainResultOL);
                 showResult();
             } else {
                 previousPressedTime = currentTime;
             }
         });
+    }
 
+    @FXML
+    private void wordListListener(){
         wordListNativeUI.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            System.out.println("selected word changed from " + oldValue + " to " + newValue);
+            System.out.println("Selected word changed from " + oldValue + " to " + newValue);
             System.out.println(newValue.getTitle());
             System.out.println(newValue.getXML());
-
             certainWordTitle.setText(newValue.getTitle());
             certainWordDefinitionWE.loadContent(newValue.getXML());
         });
     }
 
 
+    @FXML
+    private void initializeWebView() {
+        this.certainWordDefinitionWE = this.certainWordDefinition.getEngine();
+        this.certainWordDefinitionWE.setUserStyleSheetLocation(getClass().getClassLoader().getResource("DefaultStyle.css").toString());
+    }
+
+    /**
+     * Only show Word Title property through getTitle() on wordListNativeUI list.
+     * Define property ListView should show reference:
+     * https://stackoverflow.com/questions/24597911/how-to-define-which-property-listview-should-use-to-render
+     *
+     */
     @FXML
     private void showResult() {
         wordListNativeUI.setItems(certainResultOL);
@@ -130,7 +138,6 @@ public class UserInterfaceController {
 
     /**
      * Is called by the main application to give a reference back to itself.
-     *
      * @param userInterface the user interface
      */
     public void setUserInterface(UserInterface userInterface){
