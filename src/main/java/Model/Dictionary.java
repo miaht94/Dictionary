@@ -1,8 +1,6 @@
 package Model;
-
-import com.sun.xml.internal.bind.v2.runtime.reflect.Lister;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -74,9 +72,22 @@ public class Dictionary {
      */
     public void searchWord(String target, ObservableList<Word> expectedChangeList) {
         expectedChangeList.clear();
-        List resultList = searchWord(target);
+        List<Word> resultList = searchWord(target);
         for (Object w: resultList) {
             expectedChangeList.add((Word) w);
         }
+        expectedChangeList.sort(Word.getStandardComparator());
+    }
+
+    public static void main(String[] args) {
+        List<Word> sampleList = new ArrayList<Word>();
+        sampleList.add(new Word("1", "aaa", "cacac"));
+        sampleList.add(new Word("1", "BB", "cacac"));
+        sampleList.add(new Word("1", "aaaaa", "cacac"));
+        sampleList.add(new Word("1", "b", "cacac"));
+        sampleList.add(new Word("1", "bb", "cacac"));
+        ObservableList<Word> sample = FXCollections.observableArrayList(sampleList);
+        sample.sort(Word.getStandardComparator());
+        System.out.println("Done");
     }
 }
