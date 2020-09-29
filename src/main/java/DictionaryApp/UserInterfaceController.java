@@ -15,9 +15,13 @@ import javafx.collections.FXCollections;
  * Import Model only.
  */
 import Model.Dictionary;
+import javafx.scene.image.Image;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.util.Callback;
+import javafx.scene.image.ImageView;
+
+import java.io.FileNotFoundException;
 
 
 /**
@@ -28,11 +32,11 @@ public class UserInterfaceController {
     private UserInterface userInterface;
 
     @FXML
-    private JFXButton enviButton;
-    @FXML
-    private JFXButton vienButton;
+    private JFXButton dictButton;
     @FXML
     private JFXButton tranButton;
+    @FXML
+    private JFXButton settingButton;
 
     @FXML
     private TextField searchBox;
@@ -49,6 +53,10 @@ public class UserInterfaceController {
     private WebView certainWordDefinition;
     private WebEngine certainWordDefinitionWE;
 
+    @FXML
+    private ImageView backgroundArt;
+
+
     private long previousPressedTime = System.currentTimeMillis();
 
 
@@ -56,11 +64,22 @@ public class UserInterfaceController {
 
     }
 
+    /**
+     * Is called by the main application to give a reference back to itself.
+     * @param userInterface the user interface
+     */
+    public void setUserInterface(UserInterface userInterface){
+        this.userInterface = userInterface;
+    }
+
     @FXML
-    private void initialize() {
+    private void initialize() throws FileNotFoundException {
         Dictionary nativeDict = Dictionary.getInstance();
         nativeDict.searchWord("a", certainResultOL);
         showResult();
+
+        Image image = new Image(this.userInterface.getThemeBackgroundURL());
+        backgroundArt.setImage(image);
 
         initializeWebView();
         setWordListStyle();
@@ -79,10 +98,12 @@ public class UserInterfaceController {
     private void searchBoxListener(Dictionary nativeDict){
         searchBox.textProperty().addListener((observable, oldValue, newValue) -> {
             long currentTime = System.currentTimeMillis();
-            if (currentTime-previousPressedTime >= 1000) {
+            if (currentTime-previousPressedTime >= 1500) {
                 System.out.println("textfield changed from " + oldValue + " to " + newValue);
-                nativeDict.searchWord(newValue, certainResultOL);
-                showResult();
+                if (newValue != "") {
+                    nativeDict.searchWord(newValue, certainResultOL);
+                    showResult();
+                }
             } else {
                 previousPressedTime = currentTime;
             }
@@ -93,10 +114,14 @@ public class UserInterfaceController {
     private void wordListListener(){
         wordListNativeUI.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             System.out.println("Selected word changed from " + oldValue + " to " + newValue);
-            System.out.println(newValue.getTitle());
-            System.out.println(newValue.getXML());
-            certainWordTitle.setText(newValue.getTitle());
-            certainWordDefinitionWE.loadContent(newValue.getXML());
+
+            if (newValue != null) {
+                System.out.println(newValue.getTitle());
+                System.out.println(newValue.getXML());
+                certainWordTitle.setText(newValue.getTitle());
+                certainWordDefinitionWE.loadContent(newValue.getXML());
+            }
+
         });
     }
 
@@ -105,7 +130,6 @@ public class UserInterfaceController {
     private void initializeWebView() {
         this.certainWordDefinitionWE = this.certainWordDefinition.getEngine();
         this.certainWordDefinitionWE.setUserStyleSheetLocation(getClass().getClassLoader().getResource("dictionaryStyle.css").toString());
-
     }
 
     /**
@@ -134,37 +158,29 @@ public class UserInterfaceController {
                 };
             }
         });
+
+        wordListNativeUI.getSelectionModel().select(0);
     }
 
-    /**
-     * Is called by the main application to give a reference back to itself.
-     * @param userInterface the user interface
-     */
-    public void setUserInterface(UserInterface userInterface){
-        this.userInterface = userInterface;
-    }
+
+
 
     @FXML
-    private void enviButtonPressed(){
-        System.out.println("English - Vietnamese Mode toggled");
-        enviButton.setOpacity(1.0);
-        vienButton.setOpacity(0.5);
-        tranButton.setOpacity(0.5);
-    }
-    @FXML
-    private void vienButtonPressed(){
-        System.out.println("Vietnamese - English Mode toggled");
-        vienButton.setOpacity(1.0);
-        enviButton.setOpacity(0.5);
-        tranButton.setOpacity(0.5);
+    private void dictButtonPressed(){
     }
     @FXML
     private void tranButtonPressed(){
         System.out.println("Translate Mode toggled");
-        tranButton.setOpacity(1.0);
-        enviButton.setOpacity(0.5);
-        vienButton.setOpacity(0.5);
+        userInterface.initTranLayout();
     }
+
+    @FXML
+    private void settingButtonPressed(){
+        System.out.println("Setting Mode toggled");
+        userInterface.initSettLayout();
+    }
+
+
     @FXML
     private void searchButtonPressed(){
         System.out.println("Search button pressed");

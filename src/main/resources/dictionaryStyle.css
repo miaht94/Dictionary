@@ -12,9 +12,10 @@ body
 	margin-right: 0.9em;
 	margin-top: 1.0em;
 	margin-bottom: 1.5em;
-	
+
 	color: text;
 }
+
 html.apple_client-panel body
 {
 	margin-top: 0em;
@@ -306,7 +307,7 @@ span.x_xd1
 	display: block;
 	margin-top: 0.3em;
 	margin-bottom: 0.7em;
-	
+
 	margin-left: 0em;
 
 }
@@ -1092,13 +1093,13 @@ span.morphSet	{ display: none; }
 
 span.meta		 { display: none; }
 
-/* 
+/*
 span.hg span.gg.t_wordbreak
 {
 	display: none;
 }
 
-span.hg > span.lg 
+span.hg > span.lg
 {
 	display: none;
 }
@@ -1217,7 +1218,7 @@ span.vg ~ span.posg
 	margin-top: 0.0em;
 	margin-bottom: 0.2em;
 }
-span.alt-hg span.hw ~ span.posg, 
+span.alt-hg span.hw ~ span.posg,
 span.alt-hg span.vg ~ span.posg
 {
 	font-size: 100%;
@@ -2278,7 +2279,7 @@ span.synGroup > span.syn.t_core
 span.synGroup > span.syn.t_core > span.gp
 {
 	font-variant: normal;
-	font-size: 90%; 
+	font-size: 90%;
 }
 
 span.antList > span.gp.ty_label.tg_antList
@@ -2316,7 +2317,7 @@ span.feature-title
 	padding-left : 9px;
 	padding-right : 9px;
 	margin-top : 2em;
-	
+
 	border-style : solid;
 	border-width : 1px 1px 1px 1px;
 	border-color : -apple-system-tertiary-label;

@@ -12,14 +12,14 @@
     -fx-padding:2.25;
 }
 
-
 .list-view {
     -fx-background-radius: 20;
 }
 
-.list-cell {
+.list-view, .list-cell {
     -fx-border-radius: 20;
 }
+
 .list-cell:focused {
     -fx-background-color: #9370db;
     -fx-text-fill: white;
@@ -28,6 +28,13 @@
 
 .text-field {
     -fx-background-color: #dbb1b1, #fff0f0;
+    -fx-background-radius: 15;
+    -fx-border-radius: 15;
+    -fx-border-color: #9370db;
+}
+
+.text-area {
+    -fx-background-color: #ffffff, #ffffff;
     -fx-background-radius: 15;
     -fx-border-radius: 15;
     -fx-border-color: #9370db;
