@@ -79,6 +79,19 @@ public class Dictionary {
         expectedChangeList.sort(Word.getStandardComparator());
     }
 
+    public List<Word> getWordsFromDB(int index, int amount) {
+        ResultSet rs = dbReader.getRows(index, amount);
+        List<Word> returnList =  new ArrayList<>();
+        try {
+            while (rs.next()) {
+                returnList.add(new Word(rs.getString("title")));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return returnList;
+    }
+
     public static void main(String[] args) {
         List<Word> sampleList = new ArrayList<Word>();
         sampleList.add(new Word("1", "aaa", "cacac"));

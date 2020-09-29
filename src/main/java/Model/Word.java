@@ -7,6 +7,10 @@ public class Word implements Comparable {
     private String title;
     private String XML;
 
+    public Word(String title) {
+        this.title = title;
+    }
+
     public Word(String id, String title, String entry) {
         this.id = id;
         this.title = title;

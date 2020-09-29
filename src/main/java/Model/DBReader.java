@@ -50,7 +50,17 @@ public class DBReader {
         return statement.executeQuery(query);
     }
 
-
+    ResultSet getRows(int index, int amount) {
+        if (index < 0) throw new IllegalArgumentException();
+        if (amount == 0) return null;
+        try {
+            ResultSet rs = this.executeQuery("Select * From definitions where _rowid_ between " + index + " and " + (index + amount));
+            return rs;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+            return null;
+        }
+    }
 
 
 }
