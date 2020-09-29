@@ -4,6 +4,7 @@
 <?import com.jfoenix.controls.JFXComboBox?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Rectangle?>
@@ -12,7 +13,10 @@
 
 <AnchorPane maxHeight="768" maxWidth="1000" minHeight="768" minWidth="1000" prefHeight="768.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="DictionaryApp.SettingUIController">
    <children>
-      <ImageView fx:id="backgroundArt" fitHeight="768.0" fitWidth="1000.0" pickOnBounds="true" preserveRatio="true" AnchorPane.topAnchor="0.0" />
+      <ImageView fx:id="backgroundArt" fitHeight="768.0" fitWidth="1000.0" pickOnBounds="true" preserveRatio="true" AnchorPane.topAnchor="0.0">
+         <image>
+            <Image url="@background/background3.png" />
+         </image></ImageView>
       <AnchorPane prefHeight="97.0" prefWidth="1000.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <Text fill="WHITE" fontSmoothingType="LCD" layoutX="34.0" layoutY="44.0" opacity="0.51" strokeType="OUTSIDE" strokeWidth="0.0" text="Dictionary Project KoyoMia100" wrappingWidth="320.12304616346955">
@@ -24,13 +28,33 @@
       </AnchorPane>
       <AnchorPane layoutY="91.0" prefHeight="678.0" prefWidth="1000.0" AnchorPane.topAnchor="91.0">
          <children>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="282.0" layoutX="27.0" layoutY="41.0" stroke="WHITE" strokeType="INSIDE" width="944.0" />
-            <JFXComboBox fx:id="themePicker" layoutX="148.0" layoutY="133.0" prefHeight="32.0" prefWidth="188.0" />
-            <Label layoutX="70.0" layoutY="141.0" text="Theme">
+            <Rectangle arcHeight="30.0" arcWidth="30.0" fill="WHITE" height="138.0" layoutX="28.0" layoutY="77.0" stroke="WHITE" strokeType="INSIDE" width="944.0" />
+            <JFXComboBox fx:id="themePicker" layoutX="149.0" layoutY="125.0" prefHeight="32.0" prefWidth="188.0" />
+            <Label layoutX="71.0" layoutY="133.0" text="Theme">
                <font>
                   <Font size="17.0" />
                </font>
             </Label>
+            <Rectangle arcHeight="30.0" arcWidth="30.0" fill="WHITE" height="388.0" layoutX="28.0" layoutY="254.0" stroke="WHITE" strokeType="INSIDE" width="944.0" />
+            <AnchorPane layoutX="60.0" layoutY="282.0" prefHeight="180.0" prefWidth="566.0">
+               <children>
+                  <Text layoutY="71.0" strokeType="OUTSIDE" strokeWidth="0.0" text="KoyoMia100's Dictionary Project - Prototype" wrappingWidth="540.8033752441406">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+                  <Text layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" text="About" wrappingWidth="540.8033752441406">
+                     <font>
+                        <Font size="27.0" />
+                     </font>
+                  </Text>
+                  <Text layoutY="98.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Confidental." wrappingWidth="540.8033752441406">
+                     <font>
+                        <Font size="17.0" />
+                     </font>
+                  </Text>
+               </children>
+            </AnchorPane>
          </children></AnchorPane>
       <JFXButton fx:id="dictButton" buttonType="RAISED" layoutX="15.0" layoutY="50.0" onAction="#dictButtonPressed" opacity="0.51" prefHeight="35.0" prefWidth="156.0" ripplerFill="#94406e" text="Dictionary" textFill="WHITE">
          <font>

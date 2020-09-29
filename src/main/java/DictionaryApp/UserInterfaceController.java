@@ -91,7 +91,7 @@ public class UserInterfaceController {
     @FXML
     private void setWordListStyle(){
         //wordListNativeUI.setStyle(getClass().getClassLoader().getResource("certainUIStyle.css").toString());
-        wordListNativeUI.setStyle("-fx-font-size: 21px; -fx-font-family: 'SF Pro Rounded Regular';");
+        wordListNativeUI.setStyle("-fx-font-size: 19px; -fx-font-family: 'SF Pro Rounded Regular';");
     }
 
     @FXML
@@ -103,6 +103,7 @@ public class UserInterfaceController {
                 if (newValue != "") {
                     nativeDict.searchWord(newValue, certainResultOL);
                     showResult();
+                    wordListNativeUI.scrollTo(0);
                 }
             } else {
                 previousPressedTime = currentTime;

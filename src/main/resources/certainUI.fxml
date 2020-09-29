@@ -28,17 +28,17 @@
                   <Insets left="1.0" top="1.0" />
                </padding>
             </JFXButton>
-            <TextField fx:id="searchBox" blendMode="HARD_LIGHT" layoutY="92.0" prefHeight="51.0" prefWidth="970.0" promptText="type and look up here..." AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="92.0">
+            <TextField fx:id="searchBox" blendMode="HARD_LIGHT" layoutX="19.0" layoutY="96.0" prefHeight="56.0" prefWidth="964.0" promptText="type and look up here..." AnchorPane.leftAnchor="19.0" AnchorPane.rightAnchor="17.0" AnchorPane.topAnchor="96.0">
                <font>
                   <Font name="SF Pro Rounded Regular" size="26.0" />
                </font>
             </TextField>
-            <JFXButton fx:id="searchButton" buttonType="RAISED" layoutX="875.0" layoutY="84.0" onAction="#searchButtonPressed" prefHeight="68.0" prefWidth="97.0" ripplerFill="WHITE" text="Search" textFill="#b21717">
+            <JFXButton fx:id="searchButton" buttonType="RAISED" layoutX="875.0" layoutY="95.0" onAction="#searchButtonPressed" prefHeight="30.0" prefWidth="97.0" ripplerFill="WHITE" text="Search" textFill="#b21717">
                <font>
                   <Font name="SF Pro Rounded Regular" size="19.0" />
                </font>
                <padding>
-                  <Insets bottom="20.0" left="15.0" right="15.0" top="20.0" />
+                  <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                </padding>
             </JFXButton>
             <JFXButton fx:id="tranButton" buttonType="RAISED" layoutX="171.0" layoutY="50.0" onAction="#tranButtonPressed" opacity="0.51" prefHeight="35.0" prefWidth="126.0" ripplerFill="#8d3e69" text="Translate" textFill="WHITE">
@@ -72,7 +72,7 @@
       </AnchorPane>
       <AnchorPane layoutY="155.0" prefHeight="614.0" prefWidth="1000.0" AnchorPane.topAnchor="155.0">
          <children>
-            <ListView fx:id="wordListNativeUI" fixedCellSize="40.0" layoutX="14.0" layoutY="11.0" prefHeight="552.0" prefWidth="239.0" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="11.0">
+            <ListView fx:id="wordListNativeUI" fixedCellSize="40.0" layoutX="17.0" layoutY="15.0" prefHeight="552.0" prefWidth="245.0" stylesheets="@certainUIStyle.css" AnchorPane.leftAnchor="17.0" AnchorPane.topAnchor="15.0">
                <padding>
                   <Insets bottom="7.0" left="7.0" right="7.0" top="7.0" />
                </padding>
@@ -87,8 +87,8 @@
                   <Font name="Tahoma" size="34.0" />
                </font>
             </Label>
-            <Rectangle arcHeight="50.0" arcWidth="50.0" fill="WHITE" height="552.0" layoutX="268.0" layoutY="11.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" width="720.0" AnchorPane.rightAnchor="14.0" />
-            <WebView fx:id="certainWordDefinition" layoutX="280.0" layoutY="22.0" prefHeight="530.0" prefWidth="693.0" />
+            <Rectangle arcHeight="50.0" arcWidth="50.0" fill="WHITE" height="552.0" layoutX="274.0" layoutY="15.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" width="708.0" AnchorPane.rightAnchor="18.0" />
+            <WebView fx:id="certainWordDefinition" layoutX="284.0" layoutY="26.0" prefHeight="530.0" prefWidth="688.0" />
          </children></AnchorPane>
    </children>
 </AnchorPane>

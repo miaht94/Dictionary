@@ -49,6 +49,7 @@ public class SettingUIController {
         Image image = new Image(this.userInterface.getThemeBackgroundURL());
         backgroundArt.setImage(image);
 
+        themePicker.setStyle("-fx-font-size: 18px;");
         themePicker.setPromptText(themeList.get(userInterface.getTheme()-1));
         themePicker.setItems(themeList);
         themePicker.valueProperty().addListener((observable, oldValue, newValue) -> {
@@ -56,13 +57,11 @@ public class SettingUIController {
            else if (newValue == "Lipton")       themeChange(2);
            else if (newValue == "ULIS")         themeChange(3);
            else if (newValue == "DARK 100")     themeChange(4);
-           else if (newValue == "Lime")         themeChange(5);
-           else if (newValue == "Kawaii")         themeChange(6);
+           else if (newValue == "Kawaii")         themeChange(5);
+           else if (newValue == "Lime")         themeChange(6);
 
            System.out.println("Theme changed from" + oldValue + " to " + newValue);
         });
-
-
 
     }
 
