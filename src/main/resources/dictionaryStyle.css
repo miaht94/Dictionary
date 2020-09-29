@@ -5,16 +5,17 @@
 
 body
 {
-	font-size: 12pt;
-	font: -apple-system-body;
-	font-family: -apple-system;
+	font-size: 13pt;
+	font: "Tahoma";
+	font-family: "Tahoma";
 	margin-left: 0.9em;
 	margin-right: 0.9em;
 	margin-top: 1.0em;
 	margin-bottom: 1.5em;
-	
+
 	color: text;
 }
+
 html.apple_client-panel body
 {
 	margin-top: 0em;
@@ -81,7 +82,6 @@ caption
 
 tr
 {
-	/* font-size: 80%; */
 	width: 30%;
 	-webkit-hyphens: auto;
 }
@@ -90,8 +90,6 @@ td
 {
 }
 
-
-/* OSX */
 
 span[class="image"],
 .image
@@ -137,15 +135,6 @@ html.apple_client-panel img
 	display: none;
 }
 
-/* iOS */
-/*
-div.lineart
-{
-	display: none;
-}
-*/
-/* */
-
 img.gi,
 html.apple_client-panel img.gi
 {
@@ -188,8 +177,6 @@ span.ph.t_stress span.str.t_s
 {
 	text-decoration: none;
 }
-
-
 
 /*=====================================*/
 /* layout                              */
@@ -314,33 +301,15 @@ span.x_xd0.hasSn > span.x_xdh > span.sn
 	margin-right: 0.2em;
 }
 
-/* ---- */
-/*
-span.x_xd0.hasSn
-{
-	margin-left: 2.0em;
-	text-indent: 0em;
-}
-span.x_xd0 > span.sn,
-span.x_xd0 > span.x_xdh > span.sn
-{
-	margin-left: -1em;
-	margin-right: 0.0em;
-}
-*/
-/* ---- */
 
 span.x_xd1
 {
 	display: block;
 	margin-top: 0.3em;
 	margin-bottom: 0.7em;
-	
+
 	margin-left: 0em;
-	/* bilingual */
-	/*
-	margin-left: 1.0em;
-	*/
+
 }
 html.apple_client-panel span.x_xd1
 {
@@ -1124,13 +1093,13 @@ span.morphSet	{ display: none; }
 
 span.meta		 { display: none; }
 
-/* 
+/*
 span.hg span.gg.t_wordbreak
 {
 	display: none;
 }
 
-span.hg > span.lg 
+span.hg > span.lg
 {
 	display: none;
 }
@@ -1249,7 +1218,7 @@ span.vg ~ span.posg
 	margin-top: 0.0em;
 	margin-bottom: 0.2em;
 }
-span.alt-hg span.hw ~ span.posg, 
+span.alt-hg span.hw ~ span.posg,
 span.alt-hg span.vg ~ span.posg
 {
 	font-size: 100%;
@@ -2100,57 +2069,6 @@ span.xrg + span.xrg
 
 span.xu	{font-weight: 600;}
 
-
-/*
-span.def
-{
-	font-weight: normal;
-}
-*/
-
-/*
-span.MS > span.lbl {
-	font-weight: 500;
-	font-size: 80%;
-}
-*/
-
-/*
-span.gramGrp,
-span.gGrp
-{
-	font-weight: normal;
-}
-span.gg,
-span.gp.tg_gg
-{
-	font-weight: normal;
-}
-*/
-
-/*
-span.techGrp>span.lbl, span.techMS>span.lbl { font-weight: 500; font-size: 80%;}
-
-span.txn[highlight="true"] {font-style:italic;}
-span.txn[highlight="false"] { font-weight:normal;}
-
-span.txnBin	 {font-style:italic;}
-span.txnFam	 {font-weight:normal;}
-span.txnGenus	 { font-weight:normal;}
-
-
-
-span.render	{font-style:italic;}
-span.render[as="sans-serif"]	{ font-family:'HelveticaNeue';}
-span.render[as="bold"] 		{font-weight: 600;}
-span.render[as="italic"] 		{font-style:italic;} 
-*/
-
-
-/*=====================================*/
-/* General                             */
-/*=====================================*/
-
 span.bold
 {
 	font-weight: 600;
@@ -2361,7 +2279,7 @@ span.synGroup > span.syn.t_core
 span.synGroup > span.syn.t_core > span.gp
 {
 	font-variant: normal;
-	font-size: 90%; 
+	font-size: 90%;
 }
 
 span.antList > span.gp.ty_label.tg_antList
@@ -2399,7 +2317,7 @@ span.feature-title
 	padding-left : 9px;
 	padding-right : 9px;
 	margin-top : 2em;
-	
+
 	border-style : solid;
 	border-width : 1px 1px 1px 1px;
 	border-color : -apple-system-tertiary-label;
