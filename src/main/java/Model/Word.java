@@ -2,47 +2,47 @@ package Model;
 
 import java.util.Comparator;
 
-public class Word implements Comparable {
-    private String id;
+public class Word implements Comparable<Word> {
+//    private String id;
     private String title;
-    private String XML;
+//    private String XML;
 
     public Word(String id, String title, String entry) {
-        this.id = id;
+//        this.id = id;
         this.title = title;
-        this.XML = entry;
+//        this.XML = entry;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
+//    public void setId(String id) {
+//        this.id = id;
+//    }
+//
     public String getId() {
-        return id;
+        return null;
     }
 
     public String getXML() {
-        return this.XML;
+        return null;
     }
 
     public String getTitle() {
         return title;
     }
 
-    public void setXML(String XML) {
-        this.XML = XML;
-    }
+//    public void setXML(String XML) {
+//        this.XML = XML;
+//    }
 
     public void setTitle(String title) {
         this.title = title;
     }
 
     @Override
-    public int compareTo(Object o) {
-        String target = ((Word)o).getTitle();
+    public int compareTo(Word o) {
+        String target = o.getTitle();
         if (target.length() > this.getTitle().length())
-            target = target.substring(0, this.getTitle().length());
-        return this.getTitle().compareTo(target);
+            target = target.substring(0, this.getTitle().length()).toLowerCase();
+        return this.getTitle().toLowerCase().compareTo(target);
     }
 
     public static Comparator<Word> getStandardComparator() {

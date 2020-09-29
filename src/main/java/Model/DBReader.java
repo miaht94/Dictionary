@@ -50,7 +50,19 @@ public class DBReader {
         return statement.executeQuery(query);
     }
 
+    List<Word> getAllColumn(String columnLabel) throws SQLException {
+        ResultSet rs = this.executeQuery("Select * From definitions");
+        List<Word> list = new ArrayList<>();
+        while (rs.next()) {
+            list.add(new Word("", rs.getString(columnLabel), ""));
+        }
+        rs = null;
+        return list;
+    }
 
+    public void close() throws SQLException {
+        this.connection.close();
+    }
 
 
 }

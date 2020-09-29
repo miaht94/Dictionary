@@ -1,11 +1,16 @@
 package Model;
+import com.sun.javafx.collections.ObservableListWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.ObservableListBase;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
+
+import static java.lang.System.currentTimeMillis;
 
 /**
  * The type Dictionary.
@@ -15,7 +20,24 @@ public class Dictionary {
     private DBReader dbReader = DBReader.getInstance();
     private static Dictionary dictionary = null;
     private Dictionary() {
-        this.words = this.searchWord("");
+        long count = currentTimeMillis();
+        try {
+            this.words = dbReader.getAllColumn("title");
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        try {
+            dbReader.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        this.words.sort(Word.getStandardComparator());
+        System.out.println("Init Time : " + (System.currentTimeMillis() - count));
+        try {
+            DBReader.getInstance().close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
     }
 
     /**
@@ -41,7 +63,7 @@ public class Dictionary {
     /**
      * Search word.
      *
-     * @param target is a substring of each word in return list
+     * @param target is a substring of each word in return listde
      * @return the Word list contail substring target
      */
     public List<Word> searchWord(String target) {
@@ -77,6 +99,44 @@ public class Dictionary {
             expectedChangeList.add((Word) w);
         }
         expectedChangeList.sort(Word.getStandardComparator());
+    }
+
+    private List<Word> searchWordFromMemory(String target) {
+        List<Word> resultSet = new ArrayList<>();
+        int firstIndex = DictionaryUtils.customBinarySearch(this.words, new Word("",target,""));
+        if (firstIndex != -1) {
+            while (getInstance().getWords().get(firstIndex).getTitle().toLowerCase().contains(target))
+                resultSet.add(getInstance().getWords().get(firstIndex++));
+        }
+        resultSet.sort(Word.getStandardComparator());
+        return resultSet;
+    }
+
+    /**
+     * Search word from memory.
+     *
+     * @param target             the target
+     * @param expectedChangeList the list in which element be changed (add, remove, v.v...)
+     */
+    public void searchWordFromMemory(String target, ObservableList<Word> expectedChangeList) {
+        expectedChangeList.clear();
+        if (target != null && !target.equals("")) {
+            target = target.toLowerCase();
+            List<Word> resultList = searchWordFromMemory(target);
+            expectedChangeList.addAll(resultList);
+        }
+    }
+
+    public Word getWordFromDB(int index) {
+        ResultSet rs = null;
+        try {
+            rs = dbReader.executeQuery("SELECT title From definitions where _rowid_ = " + index);
+            rs.next();
+            return new Word("",rs.getString("title") , "");
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return null;
     }
 
     public static void main(String[] args) {

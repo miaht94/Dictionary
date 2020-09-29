@@ -51,9 +51,6 @@ public class UserInterfaceController {
     private WebView certainWordDefinition;
     private WebEngine certainWordDefinitionWE;
 
-    private long previousPressedTime = System.currentTimeMillis();
-
-
     public UserInterfaceController(){
 
     }
@@ -61,7 +58,8 @@ public class UserInterfaceController {
     @FXML
     private void initialize() {
         Dictionary nativeDict = Dictionary.getInstance();
-        nativeDict.searchWord("a", certainResultOL);
+
+        //nativeDict.searchWord("a", certainResultOL);
         showResult();
 
         initializeWebView();
@@ -80,13 +78,9 @@ public class UserInterfaceController {
     private void searchBoxListener(Dictionary nativeDict){
         searchBox.textProperty().addListener((observable, oldValue, newValue) -> {
             long currentTime = System.currentTimeMillis();
-            if (currentTime-previousPressedTime >= 1000) {
                 System.out.println("textfield changed from " + oldValue + " to " + newValue);
-                nativeDict.searchWord(newValue, certainResultOL);
+                nativeDict.searchWordFromMemory(newValue, certainResultOL);
                 showResult();
-            } else {
-                previousPressedTime = currentTime;
-            }
         });
     }
 
