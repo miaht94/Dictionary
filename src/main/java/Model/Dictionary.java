@@ -11,11 +11,10 @@ import java.util.Observable;
  * The type Dictionary.
  */
 public class Dictionary {
-    private List<Word> words = new ArrayList<>();
     private DBReader dbReader = DBReader.getInstance();
+    private DictionarySearcher dictionarySearcher = new DictionarySearcher(dbReader);
     private static Dictionary dictionary = null;
     private Dictionary() {
-        this.words = this.searchWord("");
     }
 
     /**
@@ -30,15 +29,6 @@ public class Dictionary {
 
 
     /**
-     * Gets List of stored Word in Dictionary (Read from DB).
-     *
-     * @return the words atribute
-     */
-    public List<Word> getWords() {
-        return words;
-    }
-
-    /**
      * Search word.
      *
      * @param target is a substring of each word in return list
@@ -46,6 +36,9 @@ public class Dictionary {
      */
     public List<Word> searchWord(String target) {
         List<Word> words = new ArrayList<Word>();
+        if (target == "") {
+            return null;
+        }
         final String query = "select * from 'definitions' where title LIKE '" + target + "%'";
         ResultSet rs;
         try {
@@ -72,11 +65,27 @@ public class Dictionary {
      */
     public void searchWord(String target, ObservableList<Word> expectedChangeList) {
         expectedChangeList.clear();
-        List<Word> resultList = searchWord(target);
-        for (Object w: resultList) {
-            expectedChangeList.add((Word) w);
+        List<Word> resultList = dictionarySearcher.search(target);
+        if (resultList != null) {
+//            for (Object w : resultList) {
+//                expectedChangeList.add((Word) w);
+//            }
+            DictionaryUtils.listToObservableList(resultList, expectedChangeList);
+            expectedChangeList.sort(Word.getStandardComparator());
         }
-        expectedChangeList.sort(Word.getStandardComparator());
+    }
+
+    public List<Word> getWordsFromDB(int index, int amount) {
+        ResultSet rs = dbReader.getRows(index, amount);
+        List<Word> returnList =  new ArrayList<>();
+        try {
+            while (rs.next()) {
+                returnList.add(new Word(rs.getString("title")));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return returnList;
     }
 
     public static void main(String[] args) {

@@ -16,11 +16,11 @@ public class DictionaryApplication {
         Dictionary app = Dictionary.getInstance();
         System.out.println("Done");
         List<Word> wordList = new ArrayList<>();
-        wordList.add(Dictionary.getInstance().getWords().get(20));
-        wordList.add(Dictionary.getInstance().getWords().get(21));
-        wordList.add(Dictionary.getInstance().getWords().get(22));
-        wordList.add(Dictionary.getInstance().getWords().get(23));
-        wordList.add(Dictionary.getInstance().getWords().get(24));
+//        wordList.add(Dictionary.getInstance().getWords().get(20));
+//        wordList.add(Dictionary.getInstance().getWords().get(21));
+//        wordList.add(Dictionary.getInstance().getWords().get(22));
+//        wordList.add(Dictionary.getInstance().getWords().get(23));
+//        wordList.add(Dictionary.getInstance().getWords().get(24));
         ObservableList<Word> list = FXCollections.observableList(wordList);
         list.addListener(new ListChangeListener<Word>() {
             @Override

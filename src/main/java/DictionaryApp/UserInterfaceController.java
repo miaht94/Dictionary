@@ -1,5 +1,6 @@
 package DictionaryApp;
 
+import Model.DictionaryUtils;
 import Model.Word;
 import com.jfoenix.controls.JFXButton;
 import javafx.fxml.FXML;
@@ -75,7 +76,7 @@ public class UserInterfaceController {
     @FXML
     private void initialize() throws FileNotFoundException {
         Dictionary nativeDict = Dictionary.getInstance();
-        nativeDict.searchWord("a", certainResultOL);
+        nativeDict.searchWord("", certainResultOL);
         showResult();
 
         Image image = new Image(this.userInterface.getThemeBackgroundURL());
@@ -98,14 +99,13 @@ public class UserInterfaceController {
     private void searchBoxListener(Dictionary nativeDict){
         searchBox.textProperty().addListener((observable, oldValue, newValue) -> {
             long currentTime = System.currentTimeMillis();
-            if (currentTime-previousPressedTime >= 1500) {
-                System.out.println("textfield changed from " + oldValue + " to " + newValue);
-                if (newValue != "") {
-                    nativeDict.searchWord(newValue, certainResultOL);
-                    showResult();
-                }
-            } else {
-                previousPressedTime = currentTime;
+            System.out.println("textfield changed from " + oldValue + " to " + newValue);
+            if (newValue != "") {
+                long count_start = System.currentTimeMillis();
+                nativeDict.searchWord(newValue, certainResultOL);
+                //DictionaryUtils.listToObservableList(nativeDict.getWordsFromDB(0,10000), certainResultOL);
+                showResult();
+                System.out.println(System.currentTimeMillis() - count_start);
             }
         });
     }
