@@ -64,6 +64,7 @@ public class Dictionary {
      * @param expectedChangeList the list in which element be changed (add, remove, v.v...)
      */
     public void searchWord(String target, ObservableList<Word> expectedChangeList) {
+        target = target.toLowerCase();
         expectedChangeList.clear();
         List<Word> resultList = dictionarySearcher.search(target);
         if (resultList != null) {
