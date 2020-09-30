@@ -76,7 +76,7 @@ public class UserInterfaceController {
     @FXML
     private void initialize() throws FileNotFoundException {
         Dictionary nativeDict = Dictionary.getInstance();
-        nativeDict.searchWord("a", certainResultOL);
+        nativeDict.searchWord("", certainResultOL);
         showResult();
 
         Image image = new Image(this.userInterface.getThemeBackgroundURL());
@@ -102,8 +102,8 @@ public class UserInterfaceController {
             System.out.println("textfield changed from " + oldValue + " to " + newValue);
             if (newValue != "") {
                 long count_start = System.currentTimeMillis();
-                //nativeDict.searchWord(newValue, certainResultOL);
-                DictionaryUtils.listToObservableList(nativeDict.getWordsFromDB(0,10000), certainResultOL);
+                nativeDict.searchWord(newValue, certainResultOL);
+                //DictionaryUtils.listToObservableList(nativeDict.getWordsFromDB(0,10000), certainResultOL);
                 showResult();
                 System.out.println(System.currentTimeMillis() - count_start);
             }
