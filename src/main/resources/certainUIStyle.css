@@ -20,6 +20,7 @@
     -fx-border-radius: 20;
 }
 
+
 .list-cell:focused {
     -fx-background-color: #9370db;
     -fx-text-fill: white;

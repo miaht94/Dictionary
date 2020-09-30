@@ -92,13 +92,14 @@ public class UserInterfaceController {
     @FXML
     private void setWordListStyle(){
         //wordListNativeUI.setStyle(getClass().getClassLoader().getResource("certainUIStyle.css").toString());
-        wordListNativeUI.setStyle("-fx-font-size: 21px; -fx-font-family: 'SF Pro Rounded Regular';");
+        wordListNativeUI.setStyle("-fx-font-size: 19px; -fx-font-family: 'SF Pro Rounded Regular';");
     }
 
     @FXML
     private void searchBoxListener(Dictionary nativeDict){
         searchBox.textProperty().addListener((observable, oldValue, newValue) -> {
             long currentTime = System.currentTimeMillis();
+
             System.out.println("textfield changed from " + oldValue + " to " + newValue);
             if (newValue != "") {
                 long count_start = System.currentTimeMillis();
@@ -106,6 +107,7 @@ public class UserInterfaceController {
                 //DictionaryUtils.listToObservableList(nativeDict.getWordsFromDB(0,10000), certainResultOL);
                 showResult();
                 System.out.println(System.currentTimeMillis() - count_start);
+
             }
         });
     }
