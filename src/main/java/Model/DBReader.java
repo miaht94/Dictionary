@@ -18,12 +18,20 @@ public class DBReader {
     public Connection getConnection() {
         return this.connection;
     }
+
+    public URL loadFile(String input){
+        ClassLoader classLoader = getClass().getClassLoader();
+        URL resource = classLoader.getResource(dbName);
+        return resource;
+    }
+
     private DBReader() {
-        URL url = DBReader.class.getClassLoader().getResource(dbName);
+        URL url = loadFile(dbName);
         try
         {
             // create a database connection
-            connection = DriverManager.getConnection("jdbc:sqlite:" + url.getPath());
+            System.out.println(url.getPath());
+            connection = DriverManager.getConnection("jdbc:sqlite::resource:" + dbName) /*url.getPath())*/;
         }
         catch(SQLException e)
         {
