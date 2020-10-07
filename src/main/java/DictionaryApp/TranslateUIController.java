@@ -36,14 +36,22 @@ public class TranslateUIController {
     private long previousPressedTime = System.currentTimeMillis();
 
 
-    public TranslateUIController(){
+    public TranslateUIController() {
 
     }
 
     @FXML
     private void initialize() {
+
         Image image = new Image(this.userInterface.getThemeBackgroundURL());
         backgroundArt.setImage(image);
+        System.out.println("translate request is " + UserInterface.getTranslateRequest());
+        if (UserInterface.getTranslateRequest() != null) {
+            System.out.println("get translate request successfully");
+            inputTextArea.setText(UserInterface.getTranslateRequest());
+            DictionarySearcher.translateWithBachAPI(UserInterface.getTranslateRequest(), this.outputTextArea);
+            UserInterface.deleteTranslateRequest();
+        }
     }
 
     public void setUserInterface(UserInterface userInterface) {
@@ -51,18 +59,18 @@ public class TranslateUIController {
     }
 
     @FXML
-    private void dictButtonPressed(){
+    private void dictButtonPressed() {
         System.out.println("Dictionary Mode toggled");
         userInterface.initDictLayout();
     }
 
     @FXML
-    private void tranButtonPressed(){
+    private void tranButtonPressed() {
 
     }
 
     @FXML
-    private void settingButtonPressed(){
+    private void settingButtonPressed() {
         System.out.println("Setting Mode toggled");
         userInterface.initSettLayout();
     }

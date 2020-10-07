@@ -1,8 +1,10 @@
 package DictionaryApp;
 
+import Model.DictionarySearcher;
 import Model.DictionaryUtils;
 import Model.Word;
 import com.jfoenix.controls.JFXButton;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
@@ -17,6 +19,8 @@ import javafx.collections.FXCollections;
  */
 import Model.Dictionary;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.util.Callback;
@@ -41,8 +45,9 @@ public class UserInterfaceController {
 
     @FXML
     private TextField searchBox;
+
     @FXML
-    private JFXButton searchButton;
+    private Label StartupNote;
 
     @FXML
     private ListView<Word> wordListNativeUI;
@@ -83,6 +88,25 @@ public class UserInterfaceController {
 
         searchBoxListener(nativeDict);
         wordListListener();
+
+        searchBox.setOnKeyPressed(new EventHandler<KeyEvent>()
+        {
+            @Override
+            public void handle(KeyEvent ke)
+            {
+                if (ke.getCode().equals(KeyCode.ENTER))
+                {
+                    nativeDict.searchWord(searchBox.getText(), certainResultOL);
+                    //DictionaryUtils.listToObservableList(nativeDict.getWordsFromDB(0,10000), certainResultOL);
+                    showResult();
+                    if (wordListNativeUI.getSelectionModel().getSelectedItem() == null){
+                        System.out.println("No words found. Change to Translate.");
+                        userInterface.initTranLayout(searchBox.getText());
+                    }
+                }
+            }
+        });
+
     }
 
     @FXML
@@ -94,6 +118,12 @@ public class UserInterfaceController {
     @FXML
     private void searchBoxListener(Dictionary nativeDict){
         searchBox.textProperty().addListener((observable, oldValue, newValue) -> {
+            long currentTime = System.currentTimeMillis();
+            if (newValue == ""){
+                StartupNote.setOpacity(1);
+            } else {
+                StartupNote.setOpacity(0);
+            }
             System.out.println("textfield changed from " + oldValue + " to " + newValue);
             long count_start = System.currentTimeMillis();
             nativeDict.searchWord(newValue, certainResultOL);
@@ -155,12 +185,11 @@ public class UserInterfaceController {
         wordListNativeUI.getSelectionModel().select(0);
     }
 
-
-
-
     @FXML
     private void dictButtonPressed(){
+
     }
+
     @FXML
     private void tranButtonPressed(){
         System.out.println("Translate Mode toggled");
@@ -171,13 +200,6 @@ public class UserInterfaceController {
     private void settingButtonPressed(){
         System.out.println("Setting Mode toggled");
         userInterface.initSettLayout();
-    }
-
-
-    @FXML
-    private void searchButtonPressed(){
-        System.out.println("Search button pressed");
-
     }
 
 }
