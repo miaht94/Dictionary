@@ -117,4 +117,63 @@ public class DictionarySearcher {
         return result;
     }
 
+    public static class apiFetcher implements Callable<String> {
+        private String text;
+        public apiFetcher(String text) {
+            this.text = text;
+        }
+        private String getRes(String text) throws IOException {
+            StringBuffer result = new StringBuffer();
+            text = URLEncoder.encode(text, StandardCharsets.UTF_8.toString());
+            URL url = new URL("https://bach-api.herokuapp.com/translate?text=" + text);
+            URLConnection yc = url.openConnection();
+            BufferedReader in = new BufferedReader(
+                    new InputStreamReader(
+                            yc.getInputStream()));
+            String inputLine;
+            while ((inputLine = in.readLine()) != null)
+                result.append(inputLine);
+            in.close();
+            return result.toString();
+        }
+        @Override
+        public String call() throws Exception {
+            return this.getRes(this.text);
+        }
+    }
+
+    public static class renderWaiter implements Runnable {
+        private Future<String> future;
+        private TextInputControl outArea;
+        public renderWaiter(Future<String> future, TextInputControl outArea) {
+            this.future = future;
+            this.outArea = outArea;
+        }
+        @Override
+        public void run() {
+            while (true) {
+                if (this.future.isDone()) break;
+            }
+            try {
+                outArea.setText(future.get());
+            } catch (InterruptedException | ExecutionException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    public static void translateWithBachAPI(String sentence, TextInputControl outArea) {
+        apiFetcher fetcher = new apiFetcher(sentence);
+        Future<String> resultWaiter = DictionarySearcher.executor.submit(fetcher);
+        renderWaiter renderWaiter = new renderWaiter(resultWaiter, outArea);
+        DictionarySearcher.executor.submit(renderWaiter);
+    }
+
+
+//    public static void main(String[] args) {
+//        DictionarySearcher.apiFetcher fetcher = new apiFetcher("One");
+//        Future<String> temp = DictionarySearcher.executor.submit(fetcher);
+//        DictionarySearcher.renderWaiter renderWaiter = new renderWaiter(temp);
+//        DictionarySearcher.executor.submit(renderWaiter);
+//        DictionarySearcher.executor.shutdown();
+//    }
 }
