@@ -1,9 +1,19 @@
 package Model;
 
+import javafx.scene.control.TextInputControl;
+
+import javax.swing.plaf.DesktopIconUI;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.net.URLConnection;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
-import java.util.concurrent.Callable;
+import java.util.concurrent.*;
 
 public class DictionarySearcher {
     private String cachedString = null;
@@ -13,11 +23,12 @@ public class DictionarySearcher {
     private DBReader dbReader;
     private int startIndex = 1;
     private int endIndex = 200768;
+    public static ExecutorService executor = Executors.newFixedThreadPool(2);
     public DictionarySearcher(DBReader dbReader) {
         this.dbReader = dbReader;
         try {
             getRangeChar();
-            setFirstTimeCache();
+            //setFirstTimeCache();
             cachedWords = firstTimeCache;
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -44,10 +55,6 @@ public class DictionarySearcher {
             }
             count++;
         }
-    }
-
-    public String getCachedString() {
-        return cachedString;
     }
 
     public void setCachedString(String cachedString) {
@@ -92,7 +99,7 @@ public class DictionarySearcher {
         }
 
     }
-//    private class Fetcher implements Callable<List<Word>> {
+    //    private class Fetcher implements Callable<List<Word>> {
 //
 //        @Override
 //        public List<Word> call() throws Exception {
@@ -107,7 +114,6 @@ public class DictionarySearcher {
             char firstChar = target.charAt(0);
             fetchCacheList(Character.toString(firstChar));
 //            this.cachedString = "" + target.charAt(0);
-            lookupList = firstTimeCache;
         }
         List<Word> result = new ArrayList<>();
         int start = DictionaryUtils.mostLeftBinarySearch(lookupList, new Word(target));
@@ -167,7 +173,6 @@ public class DictionarySearcher {
         renderWaiter renderWaiter = new renderWaiter(resultWaiter, outArea);
         DictionarySearcher.executor.submit(renderWaiter);
     }
-
 
 //    public static void main(String[] args) {
 //        DictionarySearcher.apiFetcher fetcher = new apiFetcher("One");
