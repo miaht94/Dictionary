@@ -16,19 +16,20 @@
     -fx-background-radius: 20;
 }
 
-.list-view, .list-cell {
-    -fx-border-radius: 20;
-}
-
 
 .list-cell:focused {
     -fx-background-color: #9370db;
     -fx-text-fill: white;
     -fx-border-radius: 20;
+    -fx-background-radius: 20;
+}
+
+.list-view {
+    -fx-border-radius: 20;
 }
 
 .text-field {
-    -fx-background-color: #dbb1b1, #fff0f0;
+    -fx-background-color: #ffffff, #ffffff;
     -fx-background-radius: 15;
     -fx-border-radius: 15;
     -fx-border-color: #9370db;
@@ -39,4 +40,6 @@
     -fx-background-radius: 15;
     -fx-border-radius: 15;
     -fx-border-color: #9370db;
+    -fx-font-size: 20;
+    -fx-padding:1.25;
 }

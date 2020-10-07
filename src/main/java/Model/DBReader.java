@@ -15,11 +15,12 @@ public class DBReader {
     private Connection connection = null;
     private final String dbName = "dictionary.db";
     private static DBReader dbReader = null;
+
     public Connection getConnection() {
         return this.connection;
     }
 
-    public URL loadFile(String input){
+    public URL loadFile(String input) {
         ClassLoader classLoader = getClass().getClassLoader();
         URL resource = classLoader.getResource(dbName);
         return resource;
@@ -27,14 +28,11 @@ public class DBReader {
 
     private DBReader() {
         URL url = loadFile(dbName);
-        try
-        {
+        try {
             // create a database connection
             System.out.println(url.getPath());
             connection = DriverManager.getConnection("jdbc:sqlite::resource:" + dbName) /*url.getPath())*/;
-        }
-        catch(SQLException e)
-        {
+        } catch (SQLException e) {
             System.err.println(e.getMessage());
         }
     }

@@ -16,12 +16,13 @@ public class UserInterface extends Application {
     Scene dictScene,tranScene,settScene;
     private static int theme;
     private static String themeBackgroundURL;
+    private static String translateRequest;
     //private Object UserInterfaceController = new UserInterfaceController();
 
     @Override
     public void start(Stage primaryStage) throws Exception {
         this.primaryStage = primaryStage;
-        this.primaryStage.setTitle("KoyoMia100 Dictionary Project - GUI Prototype");
+        this.primaryStage.setTitle("Koyomia Dicitonary 1.0");
         setTheme(1);
         initDictLayout();
         this.primaryStage.setResizable(false);
@@ -86,6 +87,23 @@ public class UserInterface extends Application {
 
     }
 
+    public void initTranLayout(String input){
+        setTranslateRequest(input);
+        initTranLayout();
+    }
+
+    public void setTranslateRequest(String input){
+        translateRequest = input;
+        System.out.println("set translate request to "+ translateRequest);
+    }
+
+    public static void deleteTranslateRequest(){
+        translateRequest = null;
+    }
+
+    public static String getTranslateRequest(){
+        return translateRequest;
+    }
     public void initSettLayout(){
         try{
             // Load root layout from fxml file.
@@ -122,6 +140,7 @@ public class UserInterface extends Application {
     };
 
     public static void main(String[] args) {
+        System.setProperty("Dfile.encoding","UTF-8");
         launch(args);
     }
 }

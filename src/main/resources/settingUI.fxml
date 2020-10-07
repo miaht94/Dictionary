@@ -3,6 +3,7 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXComboBox?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -19,7 +20,7 @@
          </image></ImageView>
       <AnchorPane prefHeight="97.0" prefWidth="1000.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Text fill="WHITE" fontSmoothingType="LCD" layoutX="34.0" layoutY="44.0" opacity="0.51" strokeType="OUTSIDE" strokeWidth="0.0" text="Dictionary Project KoyoMia100" wrappingWidth="320.12304616346955">
+            <Text fill="WHITE" fontSmoothingType="LCD" layoutX="34.0" layoutY="44.0" opacity="0.51" strokeType="OUTSIDE" strokeWidth="0.0" text="Koyomia Dictionary" wrappingWidth="320.12304616346955">
                <font>
                   <Font name="Arial Bold" size="20.0" />
                </font>
@@ -36,21 +37,46 @@
                </font>
             </Label>
             <Rectangle arcHeight="30.0" arcWidth="30.0" fill="WHITE" height="388.0" layoutX="28.0" layoutY="254.0" stroke="WHITE" strokeType="INSIDE" width="944.0" />
-            <AnchorPane layoutX="60.0" layoutY="282.0" prefHeight="180.0" prefWidth="566.0">
+            <AnchorPane layoutX="60.0" layoutY="282.0" prefHeight="316.0" prefWidth="885.0">
                <children>
-                  <Text layoutY="71.0" strokeType="OUTSIDE" strokeWidth="0.0" text="KoyoMia100's Dictionary Project - Prototype" wrappingWidth="540.8033752441406">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Text>
                   <Text layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" text="About" wrappingWidth="540.8033752441406">
                      <font>
                         <Font size="27.0" />
                      </font>
                   </Text>
-                  <Text layoutY="98.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Confidental." wrappingWidth="540.8033752441406">
+                  <Text layoutX="575.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="&quot;Thôi đi ngủ mai còn học tín hiệu ông ạ&quot; -  Trần Xuân Bách" textAlignment="CENTER" wrappingWidth="215.80337524414062">
                      <font>
-                        <Font size="17.0" />
+                        <Font name="Times New Roman Italic" size="23.0" />
+                     </font>
+                  </Text>
+                  <Text layoutY="77.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Koyomia Dictionary 1.0 " wrappingWidth="540.8033752441406">
+                     <font>
+                        <Font size="21.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="574.0" layoutY="188.0" strokeType="OUTSIDE" strokeWidth="0.0" text="&quot;Cái này đặt tên là Dictionary for ULIS được không nhở :))&quot; - Nguyễn Việt Anh" textAlignment="CENTER" wrappingWidth="215.80337524414062">
+                     <font>
+                        <Font name="Times New Roman Italic" size="23.0" />
+                     </font>
+                  </Text>
+                  <Text layoutY="110.0" strokeType="OUTSIDE" strokeWidth="0.0" text="by KoyoMia100 (Trần Xuân Bách &amp; Nguyễn Việt Anh)" wrappingWidth="540.8033752441406">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+                  <Text layoutY="176.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Release notes: " wrappingWidth="125.99999457597733">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+                  <Hyperlink layoutX="118.0" layoutY="153.0" text="https://github.com/miaht94/Dictionary">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Hyperlink>
+                  <Text layoutY="133.0" strokeType="OUTSIDE" strokeWidth="0.0" text="University of Engineering and Technology, VNU" wrappingWidth="540.8033752441406">
+                     <font>
+                        <Font size="18.0" />
                      </font>
                   </Text>
                </children>
