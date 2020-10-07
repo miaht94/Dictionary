@@ -62,10 +62,6 @@ public class UserInterfaceController {
     @FXML
     private ImageView backgroundArt;
 
-
-    private long previousPressedTime = System.currentTimeMillis();
-
-
     public UserInterfaceController(){
 
     }
@@ -123,21 +119,17 @@ public class UserInterfaceController {
     private void searchBoxListener(Dictionary nativeDict){
         searchBox.textProperty().addListener((observable, oldValue, newValue) -> {
             long currentTime = System.currentTimeMillis();
-
             if (newValue == ""){
                 StartupNote.setOpacity(1);
             } else {
                 StartupNote.setOpacity(0);
             }
             System.out.println("textfield changed from " + oldValue + " to " + newValue);
-            if (newValue != "") {
-                long count_start = System.currentTimeMillis();
-                nativeDict.searchWord(newValue, certainResultOL);
-                //DictionaryUtils.listToObservableList(nativeDict.getWordsFromDB(0,10000), certainResultOL);
-                showResult();
-                System.out.println(System.currentTimeMillis() - count_start);
-
-            }
+            long count_start = System.currentTimeMillis();
+            nativeDict.searchWord(newValue, certainResultOL);
+            //DictionaryUtils.listToObservableList(nativeDict.getWordsFromDB(0,10000), certainResultOL);
+            showResult();
+            System.out.println(System.currentTimeMillis() - count_start);
         });
     }
 

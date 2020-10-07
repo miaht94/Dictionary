@@ -78,7 +78,6 @@ public class TranslateUIController {
     @FXML
     void translateButtonClicked(ActionEvent event) {
         System.out.println("API Translate Button Clicked");
-
         DictionarySearcher.translateWithBachAPI(this.inputTextArea.getText(), this.outputTextArea);
     }
 
