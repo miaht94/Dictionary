@@ -27,9 +27,9 @@
                   <Font name="SF Pro Rounded Semibold" size="14.0" />
                </font>
             </Text>
-            <JFXButton buttonType="RAISED" layoutX="397.0" layoutY="389.0" prefHeight="47.0" prefWidth="103.0" text="Translate" />
-            <JFXTextArea focusColor="WHITE" labelFloat="true" layoutX="25.0" layoutY="25.0" prefHeight="364.0" prefWidth="463.0" unFocusColor="WHITE" />
-            <JFXTextArea focusColor="WHITE" labelFloat="true" layoutX="521.0" layoutY="25.0" prefHeight="364.0" prefWidth="452.0" unFocusColor="WHITE" />
+            <JFXButton buttonType="RAISED" layoutX="397.0" layoutY="389.0" onAction="#translateButtonClicked" prefHeight="47.0" prefWidth="103.0" text="Translate" />
+            <JFXTextArea fx:id="inputTextArea" focusColor="WHITE" labelFloat="true" layoutX="25.0" layoutY="25.0" prefHeight="364.0" prefWidth="463.0" unFocusColor="WHITE" />
+            <JFXTextArea fx:id="outputTextArea" focusColor="WHITE" labelFloat="true" layoutX="521.0" layoutY="25.0" prefHeight="364.0" prefWidth="452.0" unFocusColor="WHITE" />
          </children></AnchorPane>
       <JFXButton fx:id="dictButton" buttonType="RAISED" layoutX="15.0" layoutY="50.0" onAction="#dictButtonPressed" opacity="0.55" prefHeight="35.0" prefWidth="156.0" ripplerFill="#94406e" text="Dictionary" textFill="WHITE">
          <font>

@@ -1,16 +1,13 @@
 package DictionaryApp;
 
+import Model.DictionarySearcher;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import sun.misc.IOUtils;
-
 import java.io.*;
 import java.net.URL;
-import java.nio.charset.StandardCharsets;
-import java.util.stream.Collectors;
 
 public class UserInterface extends Application {
 
@@ -29,6 +26,11 @@ public class UserInterface extends Application {
         initDictLayout();
         this.primaryStage.setResizable(false);
 
+    }
+    @Override
+    public void stop(){
+        System.out.println("Stage is closing");
+        DictionarySearcher.executor.shutdown();
     }
 
     public URL loadFile(String input){
