@@ -15,18 +15,24 @@ public class DBReader {
     private Connection connection = null;
     private final String dbName = "dictionary.db";
     private static DBReader dbReader = null;
+
     public Connection getConnection() {
         return this.connection;
     }
+
+    public URL loadFile(String input) {
+        ClassLoader classLoader = getClass().getClassLoader();
+        URL resource = classLoader.getResource(dbName);
+        return resource;
+    }
+
     private DBReader() {
-        URL url = DBReader.class.getClassLoader().getResource(dbName);
-        try
-        {
+        URL url = loadFile(dbName);
+        try {
             // create a database connection
-            connection = DriverManager.getConnection("jdbc:sqlite:" + url.getPath());
-        }
-        catch(SQLException e)
-        {
+            System.out.println(url.getPath());
+            connection = DriverManager.getConnection("jdbc:sqlite::resource:" + dbName) /*url.getPath())*/;
+        } catch (SQLException e) {
             System.err.println(e.getMessage());
         }
     }
@@ -50,18 +56,16 @@ public class DBReader {
         return statement.executeQuery(query);
     }
 
-    List<Word> getAllColumn(String columnLabel) throws SQLException {
-        ResultSet rs = this.executeQuery("Select * From definitions");
-        List<Word> list = new ArrayList<>();
-        while (rs.next()) {
-            list.add(new Word("", rs.getString(columnLabel), ""));
+    ResultSet getRows(int index, int amount) {
+        if (index < 0) throw new IllegalArgumentException();
+        if (amount == 0) return null;
+        try {
+            ResultSet rs = this.executeQuery("Select * From definitions where _rowid_ between " + index + " and " + (index + amount));
+            return rs;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+            return null;
         }
-        rs = null;
-        return list;
-    }
-
-    public void close() throws SQLException {
-        this.connection.close();
     }
 
 

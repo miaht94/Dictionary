@@ -1,8 +1,10 @@
 package DictionaryApp;
 
+import Model.DictionarySearcher;
+import Model.DictionaryUtils;
 import Model.Word;
 import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXListView;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
@@ -15,11 +17,16 @@ import javafx.collections.FXCollections;
 /**
  * Import Model only.
  */
-import DictionaryApp.UserInterface;
 import Model.Dictionary;
+import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.util.Callback;
+import javafx.scene.image.ImageView;
+
+import java.io.FileNotFoundException;
 
 
 /**
@@ -30,16 +37,17 @@ public class UserInterfaceController {
     private UserInterface userInterface;
 
     @FXML
-    private JFXButton enviButton;
-    @FXML
-    private JFXButton vienButton;
+    private JFXButton dictButton;
     @FXML
     private JFXButton tranButton;
+    @FXML
+    private JFXButton settingButton;
 
     @FXML
     private TextField searchBox;
+
     @FXML
-    private JFXButton searchButton;
+    private Label StartupNote;
 
     @FXML
     private ListView<Word> wordListNativeUI;
@@ -51,36 +59,77 @@ public class UserInterfaceController {
     private WebView certainWordDefinition;
     private WebEngine certainWordDefinitionWE;
 
+    @FXML
+    private ImageView backgroundArt;
+
     public UserInterfaceController(){
 
     }
 
-    @FXML
-    private void initialize() {
-        Dictionary nativeDict = Dictionary.getInstance();
+    /**
+     * Is called by the main application to give a reference back to itself.
+     * @param userInterface the user interface
+     */
+    public void setUserInterface(UserInterface userInterface){
+        this.userInterface = userInterface;
+    }
 
-        //nativeDict.searchWord("a", certainResultOL);
+    @FXML
+    private void initialize() throws FileNotFoundException {
+        Dictionary nativeDict = Dictionary.getInstance();
+        nativeDict.searchWord("", certainResultOL);
         showResult();
+
+        Image image = new Image(this.userInterface.getThemeBackgroundURL());
+        backgroundArt.setImage(image);
 
         initializeWebView();
         setWordListStyle();
 
         searchBoxListener(nativeDict);
         wordListListener();
+
+        searchBox.setOnKeyPressed(new EventHandler<KeyEvent>()
+        {
+            @Override
+            public void handle(KeyEvent ke)
+            {
+                if (ke.getCode().equals(KeyCode.ENTER))
+                {
+                    nativeDict.searchWord(searchBox.getText(), certainResultOL);
+                    //DictionaryUtils.listToObservableList(nativeDict.getWordsFromDB(0,10000), certainResultOL);
+                    showResult();
+                    if (wordListNativeUI.getSelectionModel().getSelectedItem() == null){
+                        System.out.println("No words found. Change to Translate.");
+                        userInterface.initTranLayout(searchBox.getText());
+                    }
+                }
+            }
+        });
+
     }
 
     @FXML
     private void setWordListStyle(){
-        wordListNativeUI.setStyle("-fx-font-size: 21px; -fx-font-family: 'SF Pro Rounded Regular';");
+        //wordListNativeUI.setStyle(getClass().getClassLoader().getResource("certainUIStyle.css").toString());
+        wordListNativeUI.setStyle("-fx-font-size: 19px; -fx-font-family: 'SF Pro Rounded Regular';");
     }
 
     @FXML
     private void searchBoxListener(Dictionary nativeDict){
         searchBox.textProperty().addListener((observable, oldValue, newValue) -> {
             long currentTime = System.currentTimeMillis();
-                System.out.println("textfield changed from " + oldValue + " to " + newValue);
-                nativeDict.searchWordFromMemory(newValue, certainResultOL);
-                showResult();
+            if (newValue == ""){
+                StartupNote.setOpacity(1);
+            } else {
+                StartupNote.setOpacity(0);
+            }
+            System.out.println("textfield changed from " + oldValue + " to " + newValue);
+            long count_start = System.currentTimeMillis();
+            nativeDict.searchWord(newValue, certainResultOL);
+            //DictionaryUtils.listToObservableList(nativeDict.getWordsFromDB(0,10000), certainResultOL);
+            showResult();
+            System.out.println(System.currentTimeMillis() - count_start);
         });
     }
 
@@ -88,10 +137,14 @@ public class UserInterfaceController {
     private void wordListListener(){
         wordListNativeUI.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             System.out.println("Selected word changed from " + oldValue + " to " + newValue);
-            System.out.println(newValue.getTitle());
-            System.out.println(newValue.getXML());
-            certainWordTitle.setText(newValue.getTitle());
-            certainWordDefinitionWE.loadContent(newValue.getXML());
+
+            if (newValue != null) {
+                System.out.println(newValue.getTitle());
+                System.out.println(newValue.getXML());
+                certainWordTitle.setText(newValue.getTitle());
+                certainWordDefinitionWE.loadContent(newValue.getXML());
+            }
+
         });
     }
 
@@ -99,7 +152,7 @@ public class UserInterfaceController {
     @FXML
     private void initializeWebView() {
         this.certainWordDefinitionWE = this.certainWordDefinition.getEngine();
-        this.certainWordDefinitionWE.setUserStyleSheetLocation(getClass().getClassLoader().getResource("DefaultStyle.css").toString());
+        this.certainWordDefinitionWE.setUserStyleSheetLocation(getClass().getClassLoader().getResource("dictionaryStyle.css").toString());
     }
 
     /**
@@ -128,41 +181,25 @@ public class UserInterfaceController {
                 };
             }
         });
-    }
 
-    /**
-     * Is called by the main application to give a reference back to itself.
-     * @param userInterface the user interface
-     */
-    public void setUserInterface(UserInterface userInterface){
-        this.userInterface = userInterface;
+        wordListNativeUI.getSelectionModel().select(0);
     }
 
     @FXML
-    private void enviButtonPressed(){
-        System.out.println("English - Vietnamese Mode toggled");
-        enviButton.setOpacity(1.0);
-        vienButton.setOpacity(0.5);
-        tranButton.setOpacity(0.5);
+    private void dictButtonPressed(){
+
     }
-    @FXML
-    private void vienButtonPressed(){
-        System.out.println("Vietnamese - English Mode toggled");
-        vienButton.setOpacity(1.0);
-        enviButton.setOpacity(0.5);
-        tranButton.setOpacity(0.5);
-    }
+
     @FXML
     private void tranButtonPressed(){
         System.out.println("Translate Mode toggled");
-        tranButton.setOpacity(1.0);
-        enviButton.setOpacity(0.5);
-        vienButton.setOpacity(0.5);
+        userInterface.initTranLayout();
     }
-    @FXML
-    private void searchButtonPressed(){
-        System.out.println("Search button pressed");
 
+    @FXML
+    private void settingButtonPressed(){
+        System.out.println("Setting Mode toggled");
+        userInterface.initSettLayout();
     }
 
 }
