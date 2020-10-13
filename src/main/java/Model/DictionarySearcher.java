@@ -37,7 +37,7 @@ public class DictionarySearcher {
         }
     }
     private void getRangeChar() throws SQLException {
-        ResultSet rs = dbReader.executeQuery("SELECT * FROM definitions where _rowid_ between " + startIndex + " and " + (endIndex - 1));
+        ResultSet rs = dbReader.executeQuery("SELECT * FROM " + dbReader.getTable() + " where _rowid_ between " + startIndex + " and " + (endIndex - 1));
         int count = startIndex;
         int temp_count = startIndex;
         wordMap.put("", "0 0");
@@ -84,22 +84,23 @@ public class DictionarySearcher {
         this.cachedString = firstChar;
         this.cachedWords.clear();
 //        Callable<List<Word>> fetch = new Fetcher();
-        String[] range = wordMap.get(firstChar).split(" ");
-        int start = Integer.parseInt(range[0]);
-        int end = Integer.parseInt(range[1]);
-        ResultSet rs = dbReader.getRows(start, end - start + 1);
+        if (wordMap.get(firstChar) != null) {
+            String[] range = wordMap.get(firstChar).split(" ");
+            int start = Integer.parseInt(range[0]);
+            int end = Integer.parseInt(range[1]);
+            ResultSet rs = dbReader.getRows(start, end - start + 1);
 
-        try {
-            int count = 0;
-            while (rs.next()) {
-                cachedWords.add(new Word(start + count, rs.getString("title")));
-                count++;
+            try {
+                int count = 0;
+                while (rs.next()) {
+                    cachedWords.add(new Word(start + count, rs.getString("title")));
+                    count++;
+                }
+                cachedWords.sort(Word.getStandardComparator());
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
             }
-            cachedWords.sort(Word.getStandardComparator());
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
         }
-
     }
     //    private class Fetcher implements Callable<List<Word>> {
 //

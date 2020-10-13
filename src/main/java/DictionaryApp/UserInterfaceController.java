@@ -1,8 +1,6 @@
 package DictionaryApp;
 
-import Model.DictionarySearcher;
-import Model.DictionaryUtils;
-import Model.Word;
+import Model.*;
 import com.jfoenix.controls.JFXButton;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -17,7 +15,6 @@ import javafx.collections.FXCollections;
 /**
  * Import Model only.
  */
-import Model.Dictionary;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -76,7 +73,7 @@ public class UserInterfaceController {
 
     @FXML
     private void initialize() throws FileNotFoundException {
-        Dictionary nativeDict = Dictionary.getInstance();
+        Dictionary nativeDict = Dictionary.getInstance(DictionaryType.EN_VI);
         nativeDict.searchWord("", certainResultOL);
         showResult();
 

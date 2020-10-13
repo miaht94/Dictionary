@@ -10,14 +10,15 @@ import java.util.*;
  * Singleton Design Partern
  */
 public class Dictionary {
-    private DBReader dbReader = DBReader.getInstance();
-    public DictionarySearcher dictionarySearcher = new DictionarySearcher(dbReader, Configuration.getDictRange(DictionaryType.VI_EN));
+//    private DBReader dbReader = DBReader.getInstance(DictionaryType.EN_VI);
+    public static DictionaryType currType = DictionaryType.EN_VI;
+    public DictionarySearcher dictionarySearcher = new DictionarySearcher(DBReader.getInstance(currType), Configuration.getDictRange(currType));
     private static Dictionary dictionary = null;
     public Map<DictionaryType, DictionarySearcher> dictionarySearchers = new HashMap<>();
 
     private Dictionary() {
         for (DictionaryType type : DictionaryType.values()) {
-            this.dictionarySearchers.put(type, new DictionarySearcher(dbReader,Configuration.getDictRange(type)));
+            this.dictionarySearchers.put(type, new DictionarySearcher(DBReader.getInstance(type),Configuration.getDictRange(type)));
         }
     }
 
@@ -33,38 +34,10 @@ public class Dictionary {
 
     public static Dictionary getInstance(DictionaryType type) {
         if (Dictionary.dictionary == null) dictionary = new Dictionary();
+        currType = type;
         dictionary.dictionarySearcher = dictionary.dictionarySearchers.get(type);
         return Dictionary.dictionary;
     }
-
-    /**
-     * Search word.
-     *
-     * @param target is a substring of each word in return list
-     * @return the Word list contail substring target
-     */
-    public List<Word> searchWord(String target) {
-        List<Word> words = new ArrayList<Word>();
-        if (target.equals("")) {
-            return null;
-        }
-        final String query = "select * from 'definitions' where title LIKE '" + target + "%'";
-        ResultSet rs;
-        try {
-            rs = dbReader.executeQuery(query);
-            while (rs.next()) {
-                String id = rs.getString("id");
-                String title = rs.getString("title");
-                String entry = rs.getString("entry");
-                Word word = new Word(id, title, entry);
-                words.add(word);
-            }
-        }
-        catch(SQLException e) {
-            e.printStackTrace();
-        }
-        return words;
-    };
 
     /**
      * Search word.
@@ -86,7 +59,7 @@ public class Dictionary {
     }
 
     public List<Word> getWordsFromDB(int index, int amount) {
-        ResultSet rs = dbReader.getRows(index, amount);
+        ResultSet rs = DBReader.getInstance(currType).getRows(index, amount);
         List<Word> returnList =  new ArrayList<>();
         try {
             while (rs.next()) {

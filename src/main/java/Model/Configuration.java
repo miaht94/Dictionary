@@ -30,7 +30,7 @@ public class Configuration {
                     dictRange.put(type, new DictRange(1, 200768));
                     break;
                 case VI_EN:
-                    dictRange.put(type, new DictRange(200768, 280474));
+                    dictRange.put(type, new DictRange(1, 79707));
                     break;
             }
         }
