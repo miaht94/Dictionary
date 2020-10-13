@@ -3,18 +3,22 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Observable;
+import java.util.*;
 
 /**
  * The type Dictionary.
+ * Singleton Design Partern
  */
 public class Dictionary {
     private DBReader dbReader = DBReader.getInstance();
-    private DictionarySearcher dictionarySearcher = new DictionarySearcher(dbReader);
+    public DictionarySearcher dictionarySearcher = new DictionarySearcher(dbReader, Configuration.getDictRange(DictionaryType.VI_EN));
     private static Dictionary dictionary = null;
+    public Map<DictionaryType, DictionarySearcher> dictionarySearchers = new HashMap<>();
+
     private Dictionary() {
+        for (DictionaryType type : DictionaryType.values()) {
+            this.dictionarySearchers.put(type, new DictionarySearcher(dbReader,Configuration.getDictRange(type)));
+        }
     }
 
     /**
@@ -27,6 +31,11 @@ public class Dictionary {
         return Dictionary.dictionary;
     }
 
+    public static Dictionary getInstance(DictionaryType type) {
+        if (Dictionary.dictionary == null) dictionary = new Dictionary();
+        dictionary.dictionarySearcher = dictionary.dictionarySearchers.get(type);
+        return Dictionary.dictionary;
+    }
 
     /**
      * Search word.
@@ -36,7 +45,7 @@ public class Dictionary {
      */
     public List<Word> searchWord(String target) {
         List<Word> words = new ArrayList<Word>();
-        if (target == "") {
+        if (target.equals("")) {
             return null;
         }
         final String query = "select * from 'definitions' where title LIKE '" + target + "%'";

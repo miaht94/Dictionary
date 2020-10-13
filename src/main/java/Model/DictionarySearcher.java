@@ -24,8 +24,10 @@ public class DictionarySearcher {
     private int startIndex = 1;
     private int endIndex = 200768;
     public static ExecutorService executor = Executors.newFixedThreadPool(2);
-    public DictionarySearcher(DBReader dbReader) {
+    public DictionarySearcher(DBReader dbReader, Configuration.DictRange range) {
         this.dbReader = dbReader;
+        this.startIndex = range.start;
+        this.endIndex = range.end;
         try {
             getRangeChar();
             //setFirstTimeCache();
@@ -36,8 +38,8 @@ public class DictionarySearcher {
     }
     private void getRangeChar() throws SQLException {
         ResultSet rs = dbReader.executeQuery("SELECT * FROM definitions where _rowid_ between " + startIndex + " and " + (endIndex - 1));
-        int count = 1;
-        int temp_count = 1;
+        int count = startIndex;
+        int temp_count = startIndex;
         wordMap.put("", "0 0");
         rs.next();
         String tempChar = rs.getString("title").substring(0,1).toLowerCase();
