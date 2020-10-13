@@ -26,7 +26,13 @@ import javafx.scene.web.WebView;
 import javafx.util.Callback;
 import javafx.scene.image.ImageView;
 
-import java.io.FileNotFoundException;
+import java.beans.PropertyVetoException;
+import java.io.*;
+
+import DictionaryApp.TheVoice;
+
+import javax.speech.AudioException;
+import javax.speech.EngineException;
 
 
 /**
@@ -55,12 +61,19 @@ public class UserInterfaceController {
 
     @FXML
     private Label certainWordTitle;
+
     @FXML
     private WebView certainWordDefinition;
     private WebEngine certainWordDefinitionWE;
 
     @FXML
+    private JFXButton ttsButton;
+
+    @FXML
     private ImageView backgroundArt;
+
+    private TheVoice su;
+
 
     public UserInterfaceController(){
 
@@ -75,14 +88,13 @@ public class UserInterfaceController {
     }
 
     @FXML
-    private void initialize() throws FileNotFoundException {
+    private void initialize() throws FileNotFoundException, AudioException, EngineException, PropertyVetoException {
         Dictionary nativeDict = Dictionary.getInstance();
-        nativeDict.searchWord("", certainResultOL);
-        showResult();
+        //nativeDict.searchWord("", certainResultOL);
+        //showResult();
 
-        Image image = new Image(this.userInterface.getThemeBackgroundURL());
-        backgroundArt.setImage(image);
-
+        initializeTheVoice();
+        initializeBackground();
         initializeWebView();
         setWordListStyle();
 
@@ -110,8 +122,20 @@ public class UserInterfaceController {
     }
 
     @FXML
+    private void initializeTheVoice() throws AudioException, EngineException, PropertyVetoException {
+        su = new TheVoice();
+        su.init("kevin16");
+        ttsButton.setOpacity(0);
+    }
+
+    @FXML
+    private void initializeBackground(){
+        Image image = new Image(this.userInterface.getThemeBackgroundURL());
+        backgroundArt.setImage(image);
+    }
+
+    @FXML
     private void setWordListStyle(){
-        //wordListNativeUI.setStyle(getClass().getClassLoader().getResource("certainUIStyle.css").toString());
         wordListNativeUI.setStyle("-fx-font-size: 19px; -fx-font-family: 'SF Pro Rounded Regular';");
     }
 
@@ -121,8 +145,10 @@ public class UserInterfaceController {
             long currentTime = System.currentTimeMillis();
             if (newValue == ""){
                 StartupNote.setOpacity(1);
+                ttsButton.setOpacity(0);
             } else {
                 StartupNote.setOpacity(0);
+                ttsButton.setOpacity(1);
             }
             System.out.println("textfield changed from " + oldValue + " to " + newValue);
             long count_start = System.currentTimeMillis();
@@ -184,6 +210,40 @@ public class UserInterfaceController {
 
         wordListNativeUI.getSelectionModel().select(0);
     }
+
+    @FXML
+    private void ttsButtonPressed() throws AudioException, EngineException, PropertyVetoException, InterruptedException {
+        Thread thread = new Thread(() -> {
+            try {
+                su.doSpeak(wordListNativeUI.getSelectionModel().selectedItemProperty().get().getTitle());
+            } catch (EngineException | AudioException | InterruptedException e) {
+                e.printStackTrace();
+            }
+        });
+        thread.setDaemon(false);
+        thread.start();
+    }
+
+    public void theVoiceTerminate() throws EngineException {
+        su.terminate();
+    }
+
+    @FXML
+    private void favButtonToggle() throws FileNotFoundException {
+    }
+
+    private void initializeFavorite(){
+
+    }
+
+    private void favoriteThis(){
+
+    }
+
+    private void unfavoriteThis(){
+
+    }
+
 
     @FXML
     private void dictButtonPressed(){

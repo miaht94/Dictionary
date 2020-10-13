@@ -6,6 +6,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+
+import javax.speech.EngineException;
 import java.io.*;
 import java.net.URL;
 
@@ -17,6 +19,7 @@ public class UserInterface extends Application {
     private static int theme;
     private static String themeBackgroundURL;
     private static String translateRequest;
+    UserInterfaceController controller;
     //private Object UserInterfaceController = new UserInterfaceController();
 
     @Override
@@ -28,10 +31,12 @@ public class UserInterface extends Application {
         this.primaryStage.setResizable(false);
 
     }
+
     @Override
-    public void stop(){
+    public void stop() throws EngineException {
         System.out.println("Stage is closing");
         DictionarySearcher.executor.shutdown();
+        controller.theVoiceTerminate();
     }
 
     public URL loadFile(String input){
@@ -58,7 +63,7 @@ public class UserInterface extends Application {
             primaryStage.show();
 
             //loader.setController(UserInterfaceController);
-            UserInterfaceController controller = loader.getController();
+            controller = loader.getController();
             controller.setUserInterface(this);
 
         } catch (IOException e){

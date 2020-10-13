@@ -38,6 +38,7 @@ public class TheVoice {
       Voice voice = null;
       for(int i = 0; i < voices.length; i++) {
         if(voices[i].getName().equals(voiceName)) {
+          System.out.println(voices[i].getName());
           voice = voices[i];
           break;
         }
