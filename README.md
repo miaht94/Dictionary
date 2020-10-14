@@ -13,7 +13,8 @@ This repository houses the first project of KoyoMia100 originally made for Objec
 - Powerful dictionary database from Apple Dictionary.
 - Translate sentences powered by Google Translate API and our own "Bách's API"
 - Auto detect sentences & translate from search box
-
+- Favouite tab for instant learning.
+- Add and remove custom word <3
 
 ### Install
 
