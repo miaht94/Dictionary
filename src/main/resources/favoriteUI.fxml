@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXToggleNode?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.web.WebView?>
+
+<AnchorPane maxHeight="768" maxWidth="1000" minHeight="768" minWidth="1000" prefHeight="768.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="DictionaryApp.FavoriteUIController">
+   <children>
+      <ImageView fx:id="backgroundArt" fitHeight="768.0" fitWidth="1000.0" pickOnBounds="true" preserveRatio="true" AnchorPane.topAnchor="0.0">
+         <image>
+            <Image url="@background/background1.png" />
+         </image></ImageView>
+      <AnchorPane prefHeight="155.0" prefWidth="1000.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <JFXButton fx:id="dictButton" buttonType="RAISED" layoutX="15.0" layoutY="50.0" onAction="#dictButtonPressed" opacity="0.52" prefHeight="35.0" prefWidth="156.0" ripplerFill="#94406e" text="Dictionary" textFill="WHITE" AnchorPane.topAnchor="50.0">
+               <font>
+                  <Font size="28.0" />
+               </font>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <padding>
+                  <Insets left="1.0" top="1.0" />
+               </padding>
+            </JFXButton>
+            <JFXButton fx:id="tranButton" buttonType="RAISED" layoutX="297.0" layoutY="50.0" onAction="#tranButtonPressed" opacity="0.51" prefHeight="35.0" prefWidth="126.0" ripplerFill="#8d3e69" text="Translate" textFill="WHITE">
+               <font>
+                  <Font size="28.0" />
+               </font>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <padding>
+                  <Insets left="1.0" top="1.0" />
+               </padding>
+            </JFXButton>
+            <Text fill="WHITE" fontSmoothingType="LCD" layoutX="34.0" layoutY="44.0" opacity="0.51" strokeType="OUTSIDE" strokeWidth="0.0" text="Koyomia Dictionary" wrappingWidth="320.12304616346955">
+               <font>
+                  <Font name="Arial Bold" size="20.0" />
+               </font>
+            </Text>
+            <JFXButton fx:id="settingButton" buttonType="RAISED" layoutX="423.0" layoutY="50.0" onAction="#settingButtonPressed" opacity="0.51" prefHeight="35.0" prefWidth="126.0" ripplerFill="#8d3e69" text="Settings" textFill="WHITE">
+               <font>
+                  <Font size="28.0" />
+               </font>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <padding>
+                  <Insets left="1.0" top="1.0" />
+               </padding>
+            </JFXButton>
+            <JFXButton fx:id="favlistButton" buttonType="RAISED" layoutX="171.0" layoutY="50.0" onAction="#favlistButtonPressed" prefHeight="35.0" prefWidth="126.0" ripplerFill="#8d3e69" text="Favorites" textFill="WHITE">
+               <font>
+                  <Font size="28.0" />
+               </font>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <padding>
+                  <Insets left="1.0" top="1.0" />
+               </padding>
+            </JFXButton>
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutY="155.0" prefHeight="614.0" prefWidth="1000.0" AnchorPane.topAnchor="155.0">
+         <children>
+            <Rectangle arcHeight="50.0" arcWidth="50.0" fill="WHITE" height="614.0" layoutX="274.0" layoutY="-47.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" width="692.0" AnchorPane.rightAnchor="26.0" />
+            <WebView fx:id="certainWordDefinition" layoutX="299.0" layoutY="-10.0" prefHeight="566.0" prefWidth="658.0" />
+            <Rectangle fx:id="favButtonFrame" arcHeight="45.0" arcWidth="45.0" fill="WHITE" height="43.0" layoutX="798.0" layoutY="-36.0" opacity="0.0" stroke="#c98fb8" strokeType="INSIDE" width="140.0" />
+            <Rectangle fx:id="ttsButtonFrame" arcHeight="45.0" arcWidth="45.0" fill="WHITE" height="43.0" layoutX="744.0" layoutY="-36.0" opacity="0.0" stroke="#c98fb8" strokeType="INSIDE" width="43.0" />
+            <ListView fx:id="favoriteListUI" fixedCellSize="40.0" layoutX="28.0" layoutY="-47.0" prefHeight="614.0" prefWidth="237.0" stylesheets="@certainUIStyle.css" AnchorPane.leftAnchor="28.0" AnchorPane.topAnchor="-47.0">
+               <padding>
+                  <Insets bottom="7.0" left="7.0" right="7.0" top="7.0" />
+               </padding>
+            </ListView>
+            <Text fill="WHITE" fontSmoothingType="LCD" layoutX="14.0" layoutY="594.0" opacity="0.51" strokeType="OUTSIDE" strokeWidth="0.0" text="Apple Dictionary Database - Koyomia Dictionary 1.1" wrappingWidth="707.9999893903732">
+               <font>
+                  <Font name="SF Pro Rounded Semibold" size="14.0" />
+               </font>
+            </Text>
+            <Label fx:id="certainWordTitle" layoutX="293.0" layoutY="427.0" prefHeight="0.0" prefWidth="0.0" text="word name" textFill="WHITE">
+               <font>
+                  <Font name="Tahoma" size="34.0" />
+               </font>
+            </Label>
+            <Label fx:id="StartupNote" layoutX="359.0" layoutY="230.0" prefHeight="30.0" prefWidth="580.0" text="Click a word to show definition. Keep adding to study more!" textFill="#838383" wrapText="true">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <ImageView fx:id="speakerIcon" fitHeight="19.0" fitWidth="17.0" layoutX="757.0" layoutY="-23.0" opacity="0.0" preserveRatio="true" />
+            <JFXToggleNode fx:id="favButton" disable="true" layoutX="799.0" layoutY="-35.0" onAction="#favButtonToggle" opacity="0.0" prefHeight="41.0" prefWidth="140.0" style="-fx-background-radius: 40;" text="★  Favorite">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font></JFXToggleNode>
+            <JFXButton fx:id="ttsButton" buttonType="RAISED" disable="true" layoutX="744.0" layoutY="-36.0" onAction="#ttsButtonPressed" prefHeight="41.0" prefWidth="43.0" ripplerFill="#9f6387" style="-fx-background-radius: 40;" text="." textFill="WHITE" wrapText="true">
+               <font>
+                  <Font name="System Bold" size="1.0" />
+               </font></JFXButton>
+         </children></AnchorPane>
+   </children>
+</AnchorPane>

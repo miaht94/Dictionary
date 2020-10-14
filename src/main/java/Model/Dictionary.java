@@ -82,6 +82,8 @@ public class Dictionary {
     }
 
     public void addWord(Word word) {
+        //word.setID(-1);
+        //word.setId("User - " + currType.toString() + " " + addedWordList.get(currType).size());
         addedWordList.get(currType).add(word);
     }
 

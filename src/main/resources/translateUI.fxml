@@ -28,6 +28,39 @@
                   <Font size="17.0" />
                </font>
             </Label>
+            <JFXButton fx:id="settingButton" buttonType="RAISED" layoutX="423.0" layoutY="50.0" onAction="#settingButtonPressed" opacity="0.51" prefHeight="35.0" prefWidth="126.0" ripplerFill="#8d3e69" text="Settings" textFill="WHITE">
+               <font>
+                  <Font size="28.0" />
+               </font>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <padding>
+                  <Insets left="1.0" top="1.0" />
+               </padding>
+            </JFXButton>
+            <JFXButton fx:id="tranButton" buttonType="RAISED" layoutX="297.0" layoutY="50.0" onAction="#tranButtonPressed" prefHeight="35.0" prefWidth="126.0" ripplerFill="#8d3e69" text="Translate" textFill="WHITE">
+               <font>
+                  <Font size="28.0" />
+               </font>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <padding>
+                  <Insets left="1.0" top="1.0" />
+               </padding>
+            </JFXButton>
+            <JFXButton fx:id="favlistButton" buttonType="RAISED" layoutX="171.0" layoutY="50.0" onAction="#favlistButtonPressed" opacity="0.5" prefHeight="35.0" prefWidth="126.0" ripplerFill="#8d3e69" text="Favorites" textFill="WHITE">
+               <font>
+                  <Font size="28.0" />
+               </font>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <padding>
+                  <Insets left="1.0" top="1.0" />
+               </padding>
+            </JFXButton>
          </children>
       </AnchorPane>
       <AnchorPane layoutY="155.0" prefHeight="614.0" prefWidth="1000.0" AnchorPane.topAnchor="155.0">
@@ -45,28 +78,6 @@
             <JFXTextArea fx:id="outputTextArea" editable="false" focusColor="WHITE" labelFloat="true" layoutX="521.0" layoutY="25.0" prefHeight="364.0" prefWidth="452.0" unFocusColor="WHITE" />
          </children></AnchorPane>
       <JFXButton fx:id="dictButton" buttonType="RAISED" layoutX="15.0" layoutY="50.0" onAction="#dictButtonPressed" opacity="0.55" prefHeight="35.0" prefWidth="156.0" ripplerFill="#94406e" text="Dictionary" textFill="WHITE">
-         <font>
-            <Font size="28.0" />
-         </font>
-         <opaqueInsets>
-            <Insets />
-         </opaqueInsets>
-         <padding>
-            <Insets left="1.0" top="1.0" />
-         </padding>
-      </JFXButton>
-      <JFXButton fx:id="tranButton" buttonType="RAISED" layoutX="171.0" layoutY="50.0" onAction="#tranButtonPressed" prefHeight="35.0" prefWidth="126.0" ripplerFill="#8d3e69" text="Translate" textFill="WHITE">
-         <font>
-            <Font size="28.0" />
-         </font>
-         <opaqueInsets>
-            <Insets />
-         </opaqueInsets>
-         <padding>
-            <Insets left="1.0" top="1.0" />
-         </padding>
-      </JFXButton>
-      <JFXButton fx:id="settingButton" buttonType="RAISED" layoutX="297.0" layoutY="50.0" onAction="#settingButtonPressed" opacity="0.51" prefHeight="35.0" prefWidth="126.0" ripplerFill="#8d3e69" text="Settings" textFill="WHITE">
          <font>
             <Font size="28.0" />
          </font>

@@ -1,14 +1,11 @@
 package Model;
 
-import javafx.beans.InvalidationListener;
-import javafx.beans.Observable;
-import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
-import javafx.collections.ObservableList;
-
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
 
 public class DictionaryApplication {
     // Just for test
