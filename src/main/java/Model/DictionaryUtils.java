@@ -36,9 +36,13 @@ public class DictionaryUtils {
             if (target.compareTo(words.get(M)) < 0) R = M;
             else L = M + 1;
         }
-        if (words.get(R - 1).getTitle().toLowerCase().contains(target.getTitle().toLowerCase()))
-            return R - 1;
-        else return -1;
+        try {
+            if (words.get(R - 1).getTitle().toLowerCase().contains(target.getTitle().toLowerCase()))
+                return R - 1;
+            else return -1;
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return -1;
+        }
     }
 
     public static void main(String[] args) {

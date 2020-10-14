@@ -18,7 +18,7 @@ import java.util.concurrent.*;
 public class DictionarySearcher {
     private String cachedString = null;
     private List<Word> cachedWords = new ArrayList<>();
-    private final Map<String, String> wordMap = new HashMap<>();
+    private Map<String, String> wordMap = new HashMap<>();
     private final List<Word> firstTimeCache =  new ArrayList<>();
     private DBReader dbReader;
     private int startIndex = 1;
@@ -37,9 +37,9 @@ public class DictionarySearcher {
         }
     }
     private void getRangeChar() throws SQLException {
-        ResultSet rs = dbReader.executeQuery("SELECT * FROM " + dbReader.getTable() + " where _rowid_ between " + startIndex + " and " + (endIndex - 1));
-        int count = startIndex;
-        int temp_count = startIndex;
+        ResultSet rs = dbReader.executeQuery("SELECT * FROM " + dbReader.getTable());
+        int count = 1;
+        int temp_count = 1;
         wordMap.put("", "0 0");
         rs.next();
         String tempChar = rs.getString("title").substring(0,1).toLowerCase();
@@ -50,7 +50,7 @@ public class DictionarySearcher {
                 break;
             }
             currFirstChar = rs.getString("title").substring(0,1).toLowerCase();
-            if (wordMap.get(currFirstChar) == null && !currFirstChar.equals("-") && !currFirstChar.equals("'")) {
+            if (wordMap.get(currFirstChar) == null) {
                 wordMap.put(tempChar, temp_count + " " + count);
                 tempChar = currFirstChar;
                 temp_count = count;
@@ -86,20 +86,24 @@ public class DictionarySearcher {
 //        Callable<List<Word>> fetch = new Fetcher();
         if (wordMap.get(firstChar) != null) {
             String[] range = wordMap.get(firstChar).split(" ");
-            int start = Integer.parseInt(range[0]);
-            int end = Integer.parseInt(range[1]);
-            ResultSet rs = dbReader.getRows(start, end - start + 1);
-
-            try {
-                int count = 0;
-                while (rs.next()) {
-                    cachedWords.add(new Word(start + count, rs.getString("title")));
-                    count++;
+                int end = Integer.parseInt(range[1]);
+                int start = Integer.parseInt(range[0]);
+                ResultSet rs = dbReader.getRows(start, end - start + 1);
+                try {
+                    int count = 0;
+                    while (rs.next()) {
+                        cachedWords.add(new Word(rs.getInt("rowid"), rs.getString("title")));
+                        count++;
+                    }
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
                 }
-                cachedWords.sort(Word.getStandardComparator());
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
+
+            for (Word temp : Dictionary.addedWordList.get(Dictionary.currType)) {
+                if (temp.getTitle().toLowerCase().charAt(0) == firstChar.charAt(0))
+                    cachedWords.add(temp);
             }
+            cachedWords.sort(Word.getStandardComparator());
         }
     }
     //    private class Fetcher implements Callable<List<Word>> {
@@ -111,7 +115,6 @@ public class DictionarySearcher {
 //    }
     public List<Word> search(String target) {
         if (target.equals("")) return null;
-        if (target.charAt(0) == '\'' || target.charAt(0) == '-') target = target.substring(1);
         List<Word> lookupList = cachedWords;
         if (cachedString == null || target.charAt(0) != cachedString.charAt(0)) {
             char firstChar = target.charAt(0);
@@ -175,6 +178,24 @@ public class DictionarySearcher {
         Future<String> resultWaiter = DictionarySearcher.executor.submit(fetcher);
         renderWaiter renderWaiter = new renderWaiter(resultWaiter, outArea);
         DictionarySearcher.executor.submit(renderWaiter);
+    }
+
+    /**
+     * Update wordmap after delete a word in database.
+     * Shift left all element have index smaller than @param index
+     *
+     * @param index the index
+     */
+    public void shiftLeftWordMap(int index) {
+        for (Map.Entry<String, String> entry : wordMap.entrySet()) {
+            String value = entry.getValue();
+            String[] info = value.split(" ");
+            int start = Integer.parseInt(info[0]);
+            int end = Integer.parseInt(info[1]);
+            if (start > index) start--;
+            if (end > index) end--;
+            entry.setValue(start + " " + end);
+        }
     }
 
 //    public static void main(String[] args) {

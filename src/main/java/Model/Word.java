@@ -5,7 +5,7 @@ import java.util.Comparator;
 
 public class Word implements Comparable<Word> {
     private String id;
-    private int ID;
+    private int ID = -1;
     private String title;
     private String XML;
 
@@ -18,10 +18,15 @@ public class Word implements Comparable<Word> {
         this.title = title;
     }
 
-    public Word(String id, String title, String entry) {
+    public Word(String title, String XML) {
+        this.XML = XML;
+        this.title = title;
+    }
+
+    public Word(String id, String title, String XML) {
         this.id = id;
         this.title = title;
-        this.XML = entry;
+        this.XML = XML;
     }
 
     public int getID() {
@@ -41,12 +46,14 @@ public class Word implements Comparable<Word> {
     }
 
     public String getXML() {
-        try {
-            return DBReader.getInstance(Dictionary.currType).executeQuery("Select entry from " + Dictionary.currType.toString() + " where _rowid_ = " + this.ID).getString("entry");
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-            return "Khong load duoc DB";
-        }
+        if (this.XML == null && this.ID != -1)
+            try {
+                return DBReader.getInstance(Dictionary.currType).executeQuery("Select entry from " + Dictionary.currType.toString() + " where _rowid_ = " + this.ID).getString("entry");
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+                return "Khong load duoc DB";
+            }
+        else return this.XML;
     }
 
     public String getTitle() {
@@ -65,7 +72,7 @@ public class Word implements Comparable<Word> {
     public int compareTo(Word o) {
         String target = o.getTitle().toLowerCase();
         //String current = this.getTitle();
-        if (target.charAt(0) == '\'' || target.charAt(0) == '-') target = target.substring(1);
+        //if (target.charAt(0) == '\'' || target.charAt(0) == '-') target = target.substring(1);
         // if (current.charAt(0) == '\'' || current.charAt(0) == '-') current = current.substring(1);
         if (target.length() > this.getTitle().length())
             target = target.substring(0, this.getTitle().length());
