@@ -6,15 +6,15 @@ A certain dictionary.
 
 This repository houses the first project of KoyoMia100 originally made for Object-Oriented Programming course's group assignment of class INT2204 23, UET-VNU.
 
-### Features
+### Version 2.0 Features
 
 - Beautiful UI with 6 themes.
-- All dictionaries super quick search (English->Vietnamese & Vietnamese->English available)
+- All dictionaries super quick search (English->Vietnamese & Vietnamese->English available).
 - Powerful dictionary database from Apple Dictionary.
-- Translate sentences powered by Google Translate API and our own "Bách's API"
-- Auto detect sentences & translate from search box
-- Favouite tab for instant learning.
-- Add and remove custom word <3
+- Translate sentences powered by Google Translate API and our own "Bách's API".
+- Auto detect sentences & translate from search box.
+- Favorite tab for instant learning.
+- Add and remove custom word. <3
 
 ### Install
 
