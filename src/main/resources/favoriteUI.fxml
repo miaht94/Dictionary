@@ -75,9 +75,9 @@
       <AnchorPane layoutY="155.0" prefHeight="614.0" prefWidth="1000.0" AnchorPane.topAnchor="155.0">
          <children>
             <Rectangle arcHeight="50.0" arcWidth="50.0" fill="WHITE" height="614.0" layoutX="274.0" layoutY="-47.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" width="692.0" AnchorPane.rightAnchor="26.0" />
-            <WebView fx:id="certainWordDefinition" layoutX="299.0" layoutY="-28.0" prefHeight="584.0" prefWidth="658.0" />
-            <Rectangle fx:id="favButtonFrame" arcHeight="45.0" arcWidth="45.0" fill="WHITE" height="43.0" layoutX="798.0" layoutY="-28.0" opacity="0.0" stroke="#c98fb8" strokeType="INSIDE" width="140.0" />
-            <Rectangle fx:id="ttsButtonFrame" arcHeight="45.0" arcWidth="45.0" fill="WHITE" height="43.0" layoutX="744.0" layoutY="-28.0" opacity="0.0" stroke="#c98fb8" strokeType="INSIDE" width="43.0" />
+            <WebView fx:id="certainWordDefinition" layoutX="299.0" layoutY="-10.0" prefHeight="566.0" prefWidth="658.0" />
+            <Rectangle fx:id="favButtonFrame" arcHeight="45.0" arcWidth="45.0" fill="WHITE" height="43.0" layoutX="798.0" layoutY="-36.0" opacity="0.0" stroke="#c98fb8" strokeType="INSIDE" width="140.0" />
+            <Rectangle fx:id="ttsButtonFrame" arcHeight="45.0" arcWidth="45.0" fill="WHITE" height="43.0" layoutX="744.0" layoutY="-36.0" opacity="0.0" stroke="#c98fb8" strokeType="INSIDE" width="43.0" />
             <ListView fx:id="favoriteListUI" fixedCellSize="40.0" layoutX="28.0" layoutY="-47.0" prefHeight="614.0" prefWidth="237.0" stylesheets="@certainUIStyle.css" AnchorPane.leftAnchor="28.0" AnchorPane.topAnchor="-47.0">
                <padding>
                   <Insets bottom="7.0" left="7.0" right="7.0" top="7.0" />
@@ -98,12 +98,12 @@
                   <Font size="20.0" />
                </font>
             </Label>
-            <ImageView fx:id="speakerIcon" fitHeight="19.0" fitWidth="17.0" layoutX="757.0" layoutY="-15.0" opacity="0.0" preserveRatio="true" />
-            <JFXToggleNode fx:id="favButton" disable="true" layoutX="799.0" layoutY="-27.0" onAction="#favButtonToggle" opacity="0.0" prefHeight="41.0" prefWidth="140.0" style="-fx-background-radius: 40;" text="★  Favorite">
+            <ImageView fx:id="speakerIcon" fitHeight="19.0" fitWidth="17.0" layoutX="757.0" layoutY="-23.0" opacity="0.0" preserveRatio="true" />
+            <JFXToggleNode fx:id="favButton" disable="true" layoutX="799.0" layoutY="-35.0" onAction="#favButtonToggle" opacity="0.0" prefHeight="41.0" prefWidth="140.0" style="-fx-background-radius: 40;" text="★  Favorite">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font></JFXToggleNode>
-            <JFXButton fx:id="ttsButton" buttonType="RAISED" disable="true" layoutX="744.0" layoutY="-28.0" onAction="#ttsButtonPressed" prefHeight="41.0" prefWidth="43.0" ripplerFill="#9f6387" style="-fx-background-radius: 40;" text="." textFill="WHITE" wrapText="true">
+            <JFXButton fx:id="ttsButton" buttonType="RAISED" disable="true" layoutX="744.0" layoutY="-36.0" onAction="#ttsButtonPressed" prefHeight="41.0" prefWidth="43.0" ripplerFill="#9f6387" style="-fx-background-radius: 40;" text="." textFill="WHITE" wrapText="true">
                <font>
                   <Font name="System Bold" size="1.0" />
                </font></JFXButton>

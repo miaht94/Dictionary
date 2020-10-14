@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.controls.JFXToggleButton?>
 <?import com.jfoenix.controls.JFXToggleNode?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
@@ -37,6 +39,9 @@
                <font>
                   <Font name="SF Pro Rounded Regular" size="26.0" />
                </font>
+               <padding>
+                  <Insets left="20.0" right="250.0" />
+               </padding>
             </TextField>
             <JFXButton fx:id="tranButton" buttonType="RAISED" layoutX="297.0" layoutY="50.0" onAction="#tranButtonPressed" opacity="0.51" prefHeight="35.0" prefWidth="126.0" ripplerFill="#8d3e69" text="Translate" textFill="WHITE">
                <font>
@@ -76,12 +81,18 @@
                   <Insets left="1.0" top="1.0" />
                </padding>
             </JFXButton>
+            <JFXToggleButton fx:id="languageButton" layoutX="737.0" layoutY="101.0" onAction="#languageButtonToggle" text=" " toggleColor="#dd3461" toggleLineColor="#e46ead" unToggleColor="#2975e9" unToggleLineColor="#a4b6f8" />
+            <Label fx:id="languageTitle" layoutX="801.0" layoutY="119.0" prefHeight="21.0" prefWidth="156.0" text="English - Vietnamese">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
          </children>
       </AnchorPane>
       <AnchorPane layoutY="155.0" prefHeight="614.0" prefWidth="1000.0" AnchorPane.topAnchor="155.0">
          <children>
             <Rectangle arcHeight="50.0" arcWidth="50.0" fill="WHITE" height="545.0" layoutX="274.0" layoutY="22.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" width="692.0" AnchorPane.rightAnchor="26.0" />
-            <WebView fx:id="certainWordDefinition" layoutX="299.0" layoutY="35.0" prefHeight="521.0" prefWidth="658.0" />
+            <WebView fx:id="certainWordDefinition" layoutX="299.0" layoutY="57.0" prefHeight="499.0" prefWidth="658.0" />
             <Rectangle fx:id="favButtonFrame" arcHeight="45.0" arcWidth="45.0" fill="WHITE" height="43.0" layoutX="801.0" layoutY="34.0" opacity="0.0" stroke="#c98fb8" strokeType="INSIDE" width="140.0" />
             <Rectangle fx:id="ttsButtonFrame" arcHeight="45.0" arcWidth="45.0" fill="WHITE" height="43.0" layoutX="747.0" layoutY="34.0" opacity="0.0" stroke="#c98fb8" strokeType="INSIDE" width="43.0" />
             <ListView fx:id="wordListNativeUI" fixedCellSize="40.0" layoutX="28.0" layoutY="22.0" prefHeight="545.0" prefWidth="237.0" stylesheets="@certainUIStyle.css" AnchorPane.leftAnchor="28.0" AnchorPane.topAnchor="22.0">
@@ -89,7 +100,7 @@
                   <Insets bottom="7.0" left="7.0" right="7.0" top="7.0" />
                </padding>
             </ListView>
-            <Text fill="WHITE" fontSmoothingType="LCD" layoutX="14.0" layoutY="594.0" opacity="0.51" strokeType="OUTSIDE" strokeWidth="0.0" text="Apple Dictionary Database - Koyomia Dictionary 1.1" wrappingWidth="707.9999893903732">
+            <Text fill="WHITE" fontSmoothingType="LCD" layoutX="282.0" layoutY="595.0" opacity="0.51" strokeType="OUTSIDE" strokeWidth="0.0" text="Apple Dictionary Database - Koyomia Dictionary 1.1" wrappingWidth="707.9999893903732">
                <font>
                   <Font name="SF Pro Rounded Semibold" size="14.0" />
                </font>
@@ -99,7 +110,7 @@
                   <Font name="Tahoma" size="34.0" />
                </font>
             </Label>
-            <Label fx:id="StartupNote" layoutX="429.0" layoutY="278.0" prefHeight="26.0" prefWidth="498.0" text="type a word to look up in Koyomia Dicitonary" textFill="#838383" wrapText="true">
+            <Label fx:id="StartupNote" layoutX="429.0" layoutY="278.0" prefHeight="26.0" prefWidth="498.0" text="Type a word to look up in Koyomia Dicitonary." textFill="#838383" wrapText="true">
                <font>
                   <Font size="20.0" />
                </font>
@@ -113,6 +124,38 @@
                <font>
                   <Font name="System Bold" size="1.0" />
                </font></JFXButton>
+            <JFXButton fx:id="addModeButton" layoutX="28.0" layoutY="567.0" onAction="#addModeButtonPressed" prefHeight="37.0" prefWidth="67.0" text="＋" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="21.0" />
+               </font>
+            </JFXButton>
+            <JFXButton fx:id="removeModeButton" layoutX="82.0" layoutY="571.0" onAction="#removeModeButtonPressed" prefHeight="37.0" prefWidth="52.0" text="—" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </JFXButton>
          </children></AnchorPane>
+      <Rectangle fx:id="backlit" arcHeight="5.0" arcWidth="5.0" height="768.0" opacity="0.23" stroke="BLACK" strokeType="INSIDE" width="1000.0" />
+      <Rectangle fx:id="addDialog" arcHeight="40.0" arcWidth="40.0" fill="WHITE" height="264.0" layoutX="321.0" layoutY="258.0" stroke="WHITE" strokeType="INSIDE" width="358.0" />
+      <JFXTextField fx:id="addTitleString" alignment="BOTTOM_LEFT" focusColor="#4c67b5" layoutX="338.0" layoutY="272.0" prefHeight="22.0" prefWidth="320.0" promptText="Title" unFocusColor="#a8a8a8">
+         <font>
+            <Font size="26.0" />
+         </font>
+      </JFXTextField>
+      <JFXTextField fx:id="addDefinitionString" alignment="TOP_LEFT" layoutX="338.0" layoutY="336.0" prefHeight="119.0" prefWidth="320.0" promptText="Definition" unFocusColor="#a8a7a7">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </JFXTextField>
+      <JFXButton fx:id="confirmButton" layoutX="479.0" layoutY="469.0" onAction="#confirmButtonPressed" prefHeight="41.0" prefWidth="87.0" text="ADD" textFill="#b3b3b3">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </JFXButton>
+      <JFXButton fx:id="cancelButton" layoutX="566.0" layoutY="469.0" onAction="#cancelButtonPressed" prefHeight="41.0" prefWidth="87.0" text="CANCEL">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </JFXButton>
    </children>
 </AnchorPane>

@@ -1,9 +1,7 @@
 package DictionaryApp;
 
 import Model.*;
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXToggleButton;
-import com.jfoenix.controls.JFXToggleNode;
+import com.jfoenix.controls.*;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -20,6 +18,7 @@ import javafx.collections.FXCollections;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
@@ -28,8 +27,6 @@ import javafx.scene.image.ImageView;
 
 import java.beans.PropertyVetoException;
 import java.io.*;
-
-import DictionaryApp.TheVoice;
 
 import javax.speech.AudioException;
 import javax.speech.EngineException;
@@ -55,6 +52,11 @@ public class UserInterfaceController {
     private TextField searchBox;
 
     @FXML
+    private JFXToggleButton languageButton;
+    @FXML
+    private Label languageTitle;
+
+    @FXML
     private Label StartupNote;
 
     @FXML
@@ -70,7 +72,9 @@ public class UserInterfaceController {
 
     @FXML
     private JFXToggleNode favButton;
+
     TheFavorite fav;
+
     @FXML
     private JFXButton ttsButton;
     @FXML
@@ -85,9 +89,33 @@ public class UserInterfaceController {
     @FXML
     private ImageView backgroundArt;
 
+    @FXML
+    private JFXButton addModeButton;
+    @FXML
+    private JFXButton removeModeButton;
+    @FXML
+    private Rectangle backlit;
+
+    //ADD
+    @FXML
+    private Rectangle addDialog;
+    @FXML
+    private JFXTextField addTitleString;
+    @FXML
+    private JFXTextField addDefinitionString;
+    @FXML
+    private JFXButton confirmButton;
+    @FXML
+    private JFXButton cancelButton;
+
     private TheVoice su;
     private Dictionary nativeDict;
     private String certainWordDefinitionString;
+    private String languageMode;
+
+    private final String welcome = "Type a word to look up in Koyomia Dicitonary.";
+    private final String nowordsfound = "No words found. Press Enter to translate online.";
+
 
     public UserInterfaceController(){
 
@@ -104,11 +132,17 @@ public class UserInterfaceController {
     @FXML
 
     private void initialize() throws IOException, AudioException, EngineException, PropertyVetoException {
+        searchBox.setText("");
         nativeDict = Dictionary.getInstance(DictionaryType.EN_VI);
-        fav = new TheFavorite();
-        //nativeDict.searchWord("", certainResultOL);
-        //showResult();
+        languageMode = "EN_VI";
+        languageButton.setSelected(false);
+        languageTitle.setText("English - Vietnamese");
+        nativeDict.searchWord("a", certainResultOL);
+        showResult();
 
+        hideMode();
+
+        fav = new TheFavorite();
         fav.initialize();
         initializeTheVoice();
         initializeBackground();
@@ -161,27 +195,30 @@ public class UserInterfaceController {
     private void searchBoxListener(Dictionary nativeDict){
         searchBox.textProperty().addListener((observable, oldValue, newValue) -> {
             long currentTime = System.currentTimeMillis();
-            if (newValue == ""){
-                StartupNote.setText("Type a word to look up in Koyomia Dicitonary");
-                hideButtons();
-            } else {
-                showButtons();
-            }
-
-            System.out.println("searchBox value changed from " + oldValue + " to " + newValue);
-            long count_start = System.currentTimeMillis();
-            nativeDict.searchWord(newValue, certainResultOL);
-            //DictionaryUtils.listToObservableList(nativeDict.getWordsFromDB(0,10000), certainResultOL);
-            showResult();
-            System.out.println(System.currentTimeMillis() - count_start);
-
-            if (certainResultOL.isEmpty() && newValue != ""){
+            if (searchBox.getText().isEmpty()){
+                nativeDict.searchWord("a", certainResultOL);
+                showResult();
                 certainWordDefinitionWE.loadContent("");
                 hideButtons();
-                StartupNote.setText("No words found. Press enter to translate online.");
-            }
-            else {
-                showButtons();
+                StartupNote.setText(welcome);
+            } else {
+                System.out.println("searchBox value changed from " + oldValue + " to " + newValue);
+                long count_start = System.currentTimeMillis();
+                nativeDict.searchWord(newValue, certainResultOL);
+                //DictionaryUtils.listToObservableList(nativeDict.getWordsFromDB(0,10000), certainResultOL);
+                showResult();
+                System.out.println(System.currentTimeMillis() - count_start);
+
+                if (certainResultOL.isEmpty()){
+                    certainWordDefinitionWE.loadContent("");
+                    hideButtons();
+                    StartupNote.setText(nowordsfound);
+                    removeModeButton.setDisable(true);
+                    removeModeButton.setOpacity(0.25);
+                }
+                else {
+                    showButtons();
+                }
             }
         });
     }
@@ -190,8 +227,8 @@ public class UserInterfaceController {
     private void wordListListener(){
         wordListNativeUI.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             System.out.println("Selected word changed from " + oldValue + " to " + newValue);
-
             if (newValue != null) {
+                showButtons();
                 System.out.println(newValue.getTitle());
                 System.out.println(newValue.getXML());
                 certainWordTitle.setText(newValue.getTitle());
@@ -270,6 +307,46 @@ public class UserInterfaceController {
     }
 
     @FXML
+    private void languageButtonToggle(){
+        if (languageMode == "EN_VI"){
+            languageButton.setSelected(true);
+            nativeDict = Dictionary.getInstance(DictionaryType.VI_EN);
+            languageMode = "VI_EN";
+            languageTitle.setText("Vietnamese - English");
+            foundBehavior();
+        }
+        else {
+            languageButton.setSelected(false);
+            nativeDict = Dictionary.getInstance(DictionaryType.EN_VI);
+            languageMode = "EN_VI";
+            languageTitle.setText("English - Vietnamese");
+            foundBehavior();
+        }
+    }
+
+    private void foundBehavior(){
+        if (searchBox.getText().isEmpty()){
+            nativeDict.searchWord("a", certainResultOL);
+            showResult();
+            certainWordDefinitionWE.loadContent("");
+            hideButtons();
+            StartupNote.setText(welcome);
+        }
+        else {
+            nativeDict.searchWord(searchBox.getText(), certainResultOL);
+            showResult();
+            if (certainResultOL.isEmpty()){
+                certainWordDefinitionWE.loadContent("");
+                StartupNote.setText(nowordsfound);
+                hideButtons();
+            } else {
+                showButtons();
+            }
+
+        }
+    }
+
+    @FXML
     private void favButtonToggle() throws IOException {
         if (fav.isAdded(certainWordTitle.getText()) == true){
             fav.unmarkFav(certainWordTitle.getText());
@@ -290,6 +367,8 @@ public class UserInterfaceController {
         favButton.setDisable(false);
         ttsButton.setDisable(false);
         StartupNote.setOpacity(0);
+        removeModeButton.setDisable(false);
+        removeModeButton.setOpacity(1);
     }
 
     private void hideButtons(){
@@ -301,6 +380,133 @@ public class UserInterfaceController {
         favButton.setDisable(true);
         ttsButton.setDisable(true);
         StartupNote.setOpacity(1);
+        removeModeButton.setDisable(true);
+        removeModeButton.setOpacity(0.5);
+    }
+
+    @FXML
+    private void addModeButtonPressed(){
+        showAddMode();
+    }
+
+    @FXML
+    private void removeModeButtonPressed(){
+        showRemoveMode();
+    }
+
+    @FXML
+    private void cancelButtonPressed(){
+        hideMode();
+    }
+
+    private boolean mode;
+    //mode = false -> add
+    //mode = true -> remove
+
+    @FXML
+    private void confirmButtonPressed() throws PropertyVetoException, AudioException, EngineException, IOException {
+        if (mode == false){
+
+            //ADD MODE
+            Word s = new Word(addTitleString.getText(),addDefinitionString.getText());
+            nativeDict.addWord(s);
+            hideMode();
+            initialize();
+        } else {
+            //REMOVE MODE
+            if (wordListNativeUI.getSelectionModel().getSelectedItem() != null)
+                nativeDict.delWord(wordListNativeUI.getSelectionModel().getSelectedItem());
+            hideMode();
+            initialize();
+        }
+    }
+
+    private void showAddMode(){
+        mode = false;
+        confirmButton.setTextFill(Color.GRAY);
+        confirmButton.setDisable(true);
+
+        addTitleString.textProperty().addListener((observable, oldValue, newValue) -> {
+            if  (addTitleString.getText().isEmpty() || addDefinitionString.getText().isEmpty()){
+                confirmButton.setTextFill(Color.GRAY);
+                confirmButton.setDisable(true);
+            } else {
+                confirmButton.setTextFill(Color.GREEN);
+                confirmButton.setDisable(false);
+            }
+        });
+
+        addDefinitionString.textProperty().addListener((observable, oldValue, newValue) -> {
+            if  (addTitleString.getText().isEmpty() || addDefinitionString.getText().isEmpty()){
+                confirmButton.setTextFill(Color.GRAY);
+                confirmButton.setDisable(true);
+            } else {
+                confirmButton.setTextFill(Color.GREEN);
+                confirmButton.setDisable(false);
+            }
+        });
+        backlit.setOpacity(0.25);
+        addDialog.setOpacity(1);
+        addTitleString.setOpacity(1);
+        addDefinitionString.setOpacity(1);
+        confirmButton.setOpacity(1);
+        cancelButton.setOpacity(1);
+        backlit.setDisable(false);
+        addDialog.setDisable(false);
+        addTitleString.setDisable(false);
+        addDefinitionString.setDisable(false);
+
+
+
+        cancelButton.setDisable(false);
+
+        addTitleString.setText("");
+        addTitleString.setPromptText("Enter title");
+
+        addDefinitionString.setText("");
+        addDefinitionString.setPromptText("Enter definition");
+
+        confirmButton.setText("ADD");
+
+    }
+
+    private void hideMode(){
+        backlit.setOpacity(0);
+        addDialog.setOpacity(0);
+        addTitleString.setOpacity(0);
+        addDefinitionString.setOpacity(0);
+        confirmButton.setOpacity(0);
+        cancelButton.setOpacity(0);
+        backlit.setDisable(true);
+        addDialog.setDisable(true);
+        addTitleString.setDisable(true);
+        addDefinitionString.setDisable(true);
+        confirmButton.setDisable(true);
+        cancelButton.setDisable(true);
+
+    }
+
+    private void showRemoveMode(){
+        mode = true;
+        backlit.setOpacity(0.25);
+        addDialog.setOpacity(1);
+        addTitleString.setOpacity(1);
+        addDefinitionString.setOpacity(1);
+        confirmButton.setOpacity(1);
+        cancelButton.setOpacity(1);
+        backlit.setDisable(false);
+        addDialog.setDisable(false);
+
+        addTitleString.setDisable(true);
+        addDefinitionString.setDisable(true);
+
+        confirmButton.setDisable(false);
+        cancelButton.setDisable(false);
+        addTitleString.setText(wordListNativeUI.getSelectionModel().getSelectedItem().getTitle());
+        addDefinitionString.setText("Do you want to remove this word?");
+        confirmButton.setText("REMOVE");
+        confirmButton.setTextFill(Color.RED);
+
     }
 
     @FXML

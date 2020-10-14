@@ -13,8 +13,6 @@ import java.io.*;
 import java.net.URL;
 
 public class UserInterface extends Application {
-
-
     private Stage primaryStage;
     Scene dictScene,favScene,tranScene,settScene;
     private static int theme;
@@ -26,7 +24,7 @@ public class UserInterface extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         this.primaryStage = primaryStage;
-        this.primaryStage.setTitle("Koyomia Dicitonary 1.0");
+        this.primaryStage.setTitle("Koyomia Dicitonary 2.0");
         setTheme(1);
         initDictLayout();
         this.primaryStage.setResizable(false);
@@ -51,7 +49,6 @@ public class UserInterface extends Application {
         try{
             // Load root layout from fxml file.
             FXMLLoader loader = new FXMLLoader();
-
 
             loader.setLocation(loadFile("certainUI.fxml"));
             //loader.setLocation(UserInterface.class.getClass().getResource("/certainUI.fxml"));
