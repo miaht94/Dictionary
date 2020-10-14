@@ -1,8 +1,6 @@
 package DictionaryApp;
 
-import Model.DictionarySearcher;
-import Model.DictionaryUtils;
-import Model.Word;
+import Model.*;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXToggleButton;
 import com.jfoenix.controls.JFXToggleNode;
@@ -19,7 +17,6 @@ import javafx.collections.FXCollections;
 /**
  * Import Model only.
  */
-import Model.Dictionary;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -105,8 +102,9 @@ public class UserInterfaceController {
     }
 
     @FXML
+
     private void initialize() throws IOException, AudioException, EngineException, PropertyVetoException {
-        nativeDict = Dictionary.getInstance();
+        nativeDict = Dictionary.getInstance(DictionaryType.EN_VI);
         fav = new TheFavorite();
         //nativeDict.searchWord("", certainResultOL);
         //showResult();
