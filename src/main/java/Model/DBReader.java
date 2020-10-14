@@ -2,6 +2,9 @@ package Model;
 
 import javafx.collections.ObservableList;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
 import java.util.ArrayList;
@@ -15,7 +18,7 @@ import java.util.Map;
  */
 public class DBReader {
     private static Connection connection = null;
-    private final String dbName = "dictionary_test.db";
+    private final String dbName = "./dictionary_test.db";
     private String table =  Dictionary.currType.toString();
     private static DBReader dbReader = null;
     private static Map<DictionaryType, DBReader> dbReaders = new HashMap<>();
@@ -24,19 +27,13 @@ public class DBReader {
         return this.connection;
     }
 
-    public URL loadFile(String input) {
-        ClassLoader classLoader = getClass().getClassLoader();
-        URL resource = classLoader.getResource(dbName);
-        return resource;
-    }
-
     private DBReader() {
-        URL url = loadFile(dbName);
+        //URL url = loadFile(dbName);
         if (connection == null) {
             try {
                 // create a database connection
-                System.out.println(url.getPath());
-                connection = DriverManager.getConnection("jdbc:sqlite::resource:" + dbName) /*url.getPath())*/;
+                //System.out.println(url.getPath());
+                connection = DriverManager.getConnection("jdbc:sqlite:" + dbName) /*url.getPath())*/;
             } catch (SQLException e) {
                 System.err.println(e.getMessage());
             }
