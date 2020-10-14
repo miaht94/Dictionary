@@ -4,6 +4,8 @@ import Model.DictionarySearcher;
 import Model.DictionaryUtils;
 import Model.Word;
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXToggleButton;
+import com.jfoenix.controls.JFXToggleNode;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -67,6 +69,9 @@ public class UserInterfaceController {
     private WebEngine certainWordDefinitionWE;
 
     @FXML
+    private JFXToggleNode favButton;
+    TheFavorite fav;
+    @FXML
     private JFXButton ttsButton;
 
     @FXML
@@ -88,11 +93,13 @@ public class UserInterfaceController {
     }
 
     @FXML
-    private void initialize() throws FileNotFoundException, AudioException, EngineException, PropertyVetoException {
+    private void initialize() throws IOException, AudioException, EngineException, PropertyVetoException {
         Dictionary nativeDict = Dictionary.getInstance();
+        fav = new TheFavorite();
         //nativeDict.searchWord("", certainResultOL);
         //showResult();
 
+        fav.initialize();
         initializeTheVoice();
         initializeBackground();
         initializeWebView();
@@ -118,7 +125,6 @@ public class UserInterfaceController {
                 }
             }
         });
-
     }
 
     @FXML
@@ -169,6 +175,11 @@ public class UserInterfaceController {
                 System.out.println(newValue.getXML());
                 certainWordTitle.setText(newValue.getTitle());
                 certainWordDefinitionWE.loadContent(newValue.getXML());
+                try {
+                    favButton.setSelected(fav.isAdded(newValue.getTitle()));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
 
         });
@@ -229,21 +240,14 @@ public class UserInterfaceController {
     }
 
     @FXML
-    private void favButtonToggle() throws FileNotFoundException {
+    private void favButtonToggle() throws IOException {
+        if (fav.isAdded(certainWordTitle.getText()) == true){
+            fav.unmarkFav(certainWordTitle.getText());
+        }
+        else {
+            fav.markFav(certainWordTitle.getText());
+        }
     }
-
-    private void initializeFavorite(){
-
-    }
-
-    private void favoriteThis(){
-
-    }
-
-    private void unfavoriteThis(){
-
-    }
-
 
     @FXML
     private void dictButtonPressed(){
