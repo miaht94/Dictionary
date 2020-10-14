@@ -75,8 +75,9 @@ public class UserInterfaceController {
     private void initialize() throws FileNotFoundException {
         Dictionary nativeDict = Dictionary.getInstance(DictionaryType.EN_VI);
         nativeDict.searchWord("", certainResultOL);
-        showResult();
 
+        showResult();
+        //nativeDict.delWord(new Word("User - EN_VI 0", "-tron",""));
         Image image = new Image(this.userInterface.getThemeBackgroundURL());
         backgroundArt.setImage(image);
 
@@ -107,7 +108,7 @@ public class UserInterfaceController {
     }
 
     @FXML
-    private void setWordListStyle(){
+    private void setWordListStyle() {
         //wordListNativeUI.setStyle(getClass().getClassLoader().getResource("certainUIStyle.css").toString());
         wordListNativeUI.setStyle("-fx-font-size: 19px; -fx-font-family: 'SF Pro Rounded Regular';");
     }

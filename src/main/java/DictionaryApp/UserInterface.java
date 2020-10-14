@@ -1,5 +1,6 @@
 package DictionaryApp;
 
+import Model.Dictionary;
 import Model.DictionarySearcher;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -31,6 +32,7 @@ public class UserInterface extends Application {
     @Override
     public void stop(){
         System.out.println("Stage is closing");
+        Dictionary.appendAddedWordToFile();
         DictionarySearcher.executor.shutdown();
     }
 
