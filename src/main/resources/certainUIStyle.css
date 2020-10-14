@@ -32,14 +32,12 @@
     -fx-background-color: #ffffff, #ffffff;
     -fx-background-radius: 15;
     -fx-border-radius: 15;
-    -fx-border-color: #9370db;
 }
 
 .text-area {
     -fx-background-color: #ffffff, #ffffff;
     -fx-background-radius: 15;
     -fx-border-radius: 15;
-    -fx-border-color: #9370db;
     -fx-font-size: 20;
     -fx-padding:1.25;
 }
