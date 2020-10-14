@@ -9,7 +9,7 @@ import java.util.List;
 
 public class TheFavorite {
 
-    private List<String> favList;
+    private ArrayList<String> favList;
     private File fav;
     private FileReader favReader;
     private FileWriter favWriter;
@@ -42,6 +42,7 @@ public class TheFavorite {
             while ((line = bufferedFavReader.readLine()) != null) {
                 System.out.println(line);
                 favList.add(line);
+                bufferedFavReader.readLine();
             }
             favReader.close();
         } catch (FileNotFoundException ex) {
@@ -52,11 +53,11 @@ public class TheFavorite {
 
     }
 
-    public void markFav(String a) throws IOException {
-        if (!isAdded(a)) {
+    public void markFav(String title, String definition) throws IOException {
+        if (!isAdded(title)) {
             favWriter = new FileWriter(fav, true);
-            favWriter.write(a + "\n");
-            System.out.println(a + " added to Favorite list.");
+            favWriter.write(title + "\n" + definition);
+            System.out.println(title + " added to Favorite list.");
             favWriter.close();
             setFavList();
         }
@@ -70,10 +71,15 @@ public class TheFavorite {
 
             String lineToRemove = a;
             String currentLine;
+            boolean removeDefinition = false;
 
             while((currentLine = reader.readLine()) != null) {
                 String trimmedLine = currentLine.trim();
-                if(trimmedLine.equals(lineToRemove)) continue;
+
+                if(trimmedLine.equals(lineToRemove) == true) {
+                    currentLine = reader.readLine();
+                    continue;
+                }
                 writer.write(currentLine + System.getProperty("line.separator"));
             }
             writer.close();
@@ -96,6 +102,7 @@ public class TheFavorite {
         while((currentLine = reader.readLine()) != null) {
             String trimmedLine = currentLine.trim();
             if(trimmedLine.equals(lineToCheck)) {
+                currentLine = reader.readLine();
                 reader.close();
                 return true;
             }
@@ -104,16 +111,33 @@ public class TheFavorite {
         return false;
     }
 
-    public List<String> getFavList() {
-        return this.favList;
+    public ArrayList<String> getFavList() {
+        return favList;
+    }
+
+    public String getDefinition(String a) throws IOException {
+        BufferedReader reader = new BufferedReader(new FileReader(fav));
+        boolean check = false;
+        String lineToCheck = a;
+        String currentLine;
+
+        while((currentLine = reader.readLine()) != null) {
+            String trimmedLine = currentLine.trim();
+            if(trimmedLine.equals(lineToCheck)) {
+                currentLine = reader.readLine();
+                reader.close();
+                return currentLine;
+            }
+        }
+        reader.close();
+        return "";
     }
 
     public static void main(String[] args) throws IOException {
         TheFavorite f = new TheFavorite();
         f.initialize();
-        f.markFav("dog");
-        f.markFav("cat");
-        f.markFav("home");
-        f.setFavList();
+        //f.markFav("home","that home definition");
+        //f.markFav("node","that node nothing");
+        //System.out.println(f.getDefinition("home"));
     }
 }

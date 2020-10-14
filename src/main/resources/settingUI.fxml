@@ -18,13 +18,46 @@
          <image>
             <Image url="@background/background3.png" />
          </image></ImageView>
-      <AnchorPane prefHeight="97.0" prefWidth="1000.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <AnchorPane prefHeight="105.0" prefWidth="1000.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <Text fill="WHITE" fontSmoothingType="LCD" layoutX="34.0" layoutY="44.0" opacity="0.51" strokeType="OUTSIDE" strokeWidth="0.0" text="Koyomia Dictionary" wrappingWidth="320.12304616346955">
                <font>
                   <Font name="Arial Bold" size="20.0" />
                </font>
             </Text>
+            <JFXButton fx:id="favlistButton" buttonType="RAISED" layoutX="171.0" layoutY="50.0" onAction="#favlistButtonPressed" opacity="0.51" prefHeight="35.0" prefWidth="126.0" ripplerFill="#8d3e69" text="Favorites" textFill="WHITE">
+               <font>
+                  <Font size="28.0" />
+               </font>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <padding>
+                  <Insets left="1.0" top="1.0" />
+               </padding>
+            </JFXButton>
+            <JFXButton fx:id="settingButton" buttonType="RAISED" layoutX="423.0" layoutY="50.0" onAction="#settingButtonPressed" prefHeight="35.0" prefWidth="126.0" ripplerFill="#8d3e69" text="Settings" textFill="WHITE">
+               <font>
+                  <Font size="28.0" />
+               </font>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <padding>
+                  <Insets left="1.0" top="1.0" />
+               </padding>
+            </JFXButton>
+            <JFXButton fx:id="tranButton" buttonType="RAISED" layoutX="297.0" layoutY="50.0" onAction="#tranButtonPressed" opacity="0.51" prefHeight="35.0" prefWidth="126.0" ripplerFill="#8d3e69" text="Translate" textFill="WHITE">
+               <font>
+                  <Font size="28.0" />
+               </font>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <padding>
+                  <Insets left="1.0" top="1.0" />
+               </padding>
+            </JFXButton>
          </children>
       </AnchorPane>
       <AnchorPane layoutY="91.0" prefHeight="678.0" prefWidth="1000.0" AnchorPane.topAnchor="91.0">
@@ -49,7 +82,7 @@
                         <Font name="Times New Roman Italic" size="23.0" />
                      </font>
                   </Text>
-                  <Text layoutY="77.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Koyomia Dictionary 1.0 " wrappingWidth="540.8033752441406">
+                  <Text layoutY="77.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Koyomia Dictionary 1.1 " wrappingWidth="540.8033752441406">
                      <font>
                         <Font size="21.0" />
                      </font>
@@ -83,28 +116,6 @@
             </AnchorPane>
          </children></AnchorPane>
       <JFXButton fx:id="dictButton" buttonType="RAISED" layoutX="15.0" layoutY="50.0" onAction="#dictButtonPressed" opacity="0.51" prefHeight="35.0" prefWidth="156.0" ripplerFill="#94406e" text="Dictionary" textFill="WHITE">
-         <font>
-            <Font size="28.0" />
-         </font>
-         <opaqueInsets>
-            <Insets />
-         </opaqueInsets>
-         <padding>
-            <Insets left="1.0" top="1.0" />
-         </padding>
-      </JFXButton>
-      <JFXButton fx:id="tranButton" buttonType="RAISED" layoutX="171.0" layoutY="50.0" onAction="#tranButtonPressed" opacity="0.51" prefHeight="35.0" prefWidth="126.0" ripplerFill="#8d3e69" text="Translate" textFill="WHITE">
-         <font>
-            <Font size="28.0" />
-         </font>
-         <opaqueInsets>
-            <Insets />
-         </opaqueInsets>
-         <padding>
-            <Insets left="1.0" top="1.0" />
-         </padding>
-      </JFXButton>
-      <JFXButton fx:id="settingButton" buttonType="RAISED" layoutX="297.0" layoutY="50.0" onAction="#settingButtonPressed" prefHeight="35.0" prefWidth="126.0" ripplerFill="#8d3e69" text="Settings" textFill="WHITE">
          <font>
             <Font size="28.0" />
          </font>
