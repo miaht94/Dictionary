@@ -7,6 +7,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+
+import javax.speech.EngineException;
 import java.io.*;
 import java.net.URL;
 
@@ -14,10 +16,11 @@ public class UserInterface extends Application {
 
 
     private Stage primaryStage;
-    Scene dictScene,tranScene,settScene;
+    Scene dictScene,favScene,tranScene,settScene;
     private static int theme;
     private static String themeBackgroundURL;
     private static String translateRequest;
+    UserInterfaceController controller;
     //private Object UserInterfaceController = new UserInterfaceController();
 
     @Override
@@ -29,11 +32,13 @@ public class UserInterface extends Application {
         this.primaryStage.setResizable(false);
 
     }
+
     @Override
-    public void stop(){
+    public void stop() throws EngineException {
         System.out.println("Stage is closing");
         Dictionary.appendAddedWordToFile();
         DictionarySearcher.executor.shutdown();
+        controller.theVoiceTerminate();
     }
 
     public URL loadFile(String input){
@@ -60,7 +65,29 @@ public class UserInterface extends Application {
             primaryStage.show();
 
             //loader.setController(UserInterfaceController);
-            UserInterfaceController controller = loader.getController();
+            controller = loader.getController();
+            controller.setUserInterface(this);
+
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+
+    }
+
+    public void initFavLayout(){
+        try{
+            // Load root layout from fxml file.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(UserInterface.class.getResource("/favoriteUI.fxml"));
+            Parent root = loader.load();
+            favScene = new Scene(root, 1000, 768);
+
+            favScene.getStylesheets().add(getClass().getClassLoader().getResource("certainUIStyle.css").toString());
+            //dictScene.getStylesheets().add(getClass().getClassLoader().getResource("certainUIStyle.css").toString());
+            primaryStage.setScene(favScene);
+            primaryStage.show();
+
+            FavoriteUIController controller = loader.getController();
             controller.setUserInterface(this);
 
         } catch (IOException e){

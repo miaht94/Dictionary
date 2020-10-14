@@ -25,6 +25,8 @@ public class SettingUIController {
     @FXML
     private JFXButton dictButton;
     @FXML
+    private JFXButton favlistButton;
+    @FXML
     private JFXButton tranButton;
     @FXML
     private JFXButton settingButton;
@@ -74,6 +76,12 @@ public class SettingUIController {
         Image newImage = new Image(this.userInterface.getThemeBackgroundURL());
         backgroundArt.setImage(newImage);
         System.out.println("changed to" + this.userInterface.getThemeBackgroundURL());
+    }
+
+    @FXML
+    private void favlistButtonPressed(){
+        System.out.println("Favorite Mode toggled");
+        userInterface.initFavLayout();
     }
 
     @FXML

@@ -23,6 +23,8 @@ public class TranslateUIController {
     @FXML
     private JFXButton dictButton;
     @FXML
+    private JFXButton favlistButton;
+    @FXML
     private JFXButton tranButton;
     @FXML
     private JFXButton settingButton;
@@ -73,6 +75,12 @@ public class TranslateUIController {
     private void settingButtonPressed() {
         System.out.println("Setting Mode toggled");
         userInterface.initSettLayout();
+    }
+
+    @FXML
+    private void favlistButtonPressed(){
+        System.out.println("Favorite Mode toggled");
+        userInterface.initFavLayout();
     }
 
     @FXML
