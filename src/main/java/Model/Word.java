@@ -42,7 +42,7 @@ public class Word implements Comparable<Word> {
 
     public String getXML() {
         try {
-            return DBReader.getInstance().executeQuery("Select entry from definitions where _rowid_ = " + this.ID).getString("entry");
+            return DBReader.getInstance(Dictionary.currType).executeQuery("Select entry from " + Dictionary.currType.toString() + " where _rowid_ = " + this.ID).getString("entry");
         } catch (SQLException throwables) {
             throwables.printStackTrace();
             return "Khong load duoc DB";

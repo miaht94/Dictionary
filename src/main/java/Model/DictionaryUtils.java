@@ -14,6 +14,7 @@ public class DictionaryUtils {
     }
 
     static int mostLeftBinarySearch(List<Word> words, Word target) {
+        if (words.size() < 1) return -1;
         int L = 0;
         int R = words.size() - 1;
         while (L < R) {
@@ -27,6 +28,7 @@ public class DictionaryUtils {
     }
 
     static int mostRightBinarySearch(List<Word> words, Word target) {
+        if (words.size() < 1) return -1;
         int L = 0;
         int R = words.size();
         while (L < R) {

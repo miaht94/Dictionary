@@ -3,18 +3,23 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Observable;
+import java.util.*;
 
 /**
  * The type Dictionary.
+ * Singleton Design Partern
  */
 public class Dictionary {
-    private DBReader dbReader = DBReader.getInstance();
-    private DictionarySearcher dictionarySearcher = new DictionarySearcher(dbReader);
+//    private DBReader dbReader = DBReader.getInstance(DictionaryType.EN_VI);
+    public static DictionaryType currType = DictionaryType.EN_VI;
+    public DictionarySearcher dictionarySearcher = new DictionarySearcher(DBReader.getInstance(currType), Configuration.getDictRange(currType));
     private static Dictionary dictionary = null;
+    public Map<DictionaryType, DictionarySearcher> dictionarySearchers = new HashMap<>();
+
     private Dictionary() {
+        for (DictionaryType type : DictionaryType.values()) {
+            this.dictionarySearchers.put(type, new DictionarySearcher(DBReader.getInstance(type),Configuration.getDictRange(type)));
+        }
     }
 
     /**
@@ -27,35 +32,12 @@ public class Dictionary {
         return Dictionary.dictionary;
     }
 
-
-    /**
-     * Search word.
-     *
-     * @param target is a substring of each word in return list
-     * @return the Word list contail substring target
-     */
-    public List<Word> searchWord(String target) {
-        List<Word> words = new ArrayList<Word>();
-        if (target == "") {
-            return null;
-        }
-        final String query = "select * from 'definitions' where title LIKE '" + target + "%'";
-        ResultSet rs;
-        try {
-            rs = dbReader.executeQuery(query);
-            while (rs.next()) {
-                String id = rs.getString("id");
-                String title = rs.getString("title");
-                String entry = rs.getString("entry");
-                Word word = new Word(id, title, entry);
-                words.add(word);
-            }
-        }
-        catch(SQLException e) {
-            e.printStackTrace();
-        }
-        return words;
-    };
+    public static Dictionary getInstance(DictionaryType type) {
+        if (Dictionary.dictionary == null) dictionary = new Dictionary();
+        currType = type;
+        dictionary.dictionarySearcher = dictionary.dictionarySearchers.get(type);
+        return Dictionary.dictionary;
+    }
 
     /**
      * Search word.
@@ -77,7 +59,7 @@ public class Dictionary {
     }
 
     public List<Word> getWordsFromDB(int index, int amount) {
-        ResultSet rs = dbReader.getRows(index, amount);
+        ResultSet rs = DBReader.getInstance(currType).getRows(index, amount);
         List<Word> returnList =  new ArrayList<>();
         try {
             while (rs.next()) {
